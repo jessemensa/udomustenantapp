@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-// import 'previousdampandmouldscreen.dart';
+// import 'movefurniturewithoutassistancescreen.dart';
 
-class NumberofTenantsScreen extends StatefulWidget {
-  const NumberofTenantsScreen({super.key});
+class PreviousDampMouldScreen extends StatefulWidget {
+  const PreviousDampMouldScreen({super.key});
 
   @override
-  State<NumberofTenantsScreen> createState() => _NumberofTenantsScreenState();
+  State<PreviousDampMouldScreen> createState() => _PreviousDampMouldScreenState();
 }
 
-class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
-  String? _selectedOption;
-  int? _customNumber;
-  final TextEditingController _customController = TextEditingController();
+class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
+  String? _selected;
+  String? _timeframe;
+  String? _resolution;
   int _selectedIndex = 0;
-  bool _useCustomInput = false;
-
-  @override
-  void dispose() {
-    _customController.dispose();
-    super.dispose();
-  }
+  bool _showAdditionalQuestions = false;
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +75,14 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
           label: 'Report',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings_rounded),
-          activeIcon: Icon(Icons.settings),
-          label: 'Settings',
+          icon: Icon(Icons.chat_bubble_outline),
+          activeIcon: Icon(Icons.chat_bubble),
+          label: 'Chat',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person_outline),
+          activeIcon: Icon(Icons.person),
+          label: 'Profile',
         ),
       ],
     );
@@ -108,8 +106,8 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
               ? 600
               : (isTablet ? 500 : double.infinity);
           final double titleFontSize = isDesktop
-              ? 28
-              : (isTablet ? 24 : 20);
+              ? 26
+              : (isTablet ? 22 : 19);
           final double bodyFontSize = isDesktop
               ? 18
               : (isTablet ? 17 : 16);
@@ -125,25 +123,25 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Custom Header with back button
+                    // Custom Header
                     _buildHeader(context, isTablet, isDesktop),
 
-                    // Main content
+                    // Main content with scroll
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            SizedBox(height: isTablet ? 40 : 24),
+                            SizedBox(height: isTablet ? 32 : 20),
 
-                            // Question title
+                            // Main question
                             Text(
-                              'How many tenants live in the property?',
+                              'Have you previously reported damp and mould issues at this property?',
                               style: TextStyle(
                                 fontSize: titleFontSize,
-                                fontFamily: 'Exo2',
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black87,
+                                fontFamily: 'Exo2',
                               ),
                             ),
 
@@ -151,46 +149,22 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
 
                             // Helper text
                             Text(
-                              'This helps us understand the scale of the issue',
+                              'This helps us understand if this is a recurring issue',
                               style: TextStyle(
                                 fontSize: bodyFontSize - 2,
                                 fontFamily: 'Exo2',
                                 color: Colors.black54,
                               ),
                             ),
-
-                            SizedBox(height: isTablet ? 32 : 24),
-
-                            // Selection method toggle
-                            _buildSelectionMethodToggle(bodyFontSize, isTablet),
-
-                            SizedBox(height: isTablet ? 24 : 16),
-
-                            // Input field based on selection method
-                            AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              child: _buildDropdownSelection(bodyFontSize, isTablet),
-                            ),
-
-                            // Validation message
-                            if (!_isValidSelection())
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8),
-                                child: Text(
-                                  'Please select or enter the number of tenants',
-                                  style: TextStyle(
-                                    fontSize: bodyFontSize - 3,
-                                    fontFamily: 'Exo2',
-                                    color: Colors.orange.shade700,
-                                  ),
-                                ),
-                              ),
+                            SizedBox(height: isTablet ? 28 : 20),
+                            // Primary dropdown
+                            _buildPrimaryDropdown(bodyFontSize, isTablet),
                           ],
                         ),
                       ),
                     ),
 
-                    // Bottom section with Next button
+                    // Bottom section with buttons
                     _buildBottomSection(context, buttonHeight, bodyFontSize, isTablet),
                   ],
                 ),
@@ -223,64 +197,27 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
               padding: EdgeInsets.all(isTablet ? 12 : 8),
             ),
           ),
+
           const SizedBox(width: 16),
         ],
       ),
     );
   }
 
-  Widget _buildSelectionMethodToggle(double bodyFontSize, bool isTablet) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      padding: const EdgeInsets.all(4),
-      child: Row(
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: () => setState(() => _useCustomInput = false),
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: isTablet ? 12 : 10,
-                ),
-                decoration: BoxDecoration(
-                  color: !_useCustomInput ? Colors.white : Colors.transparent,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: !_useCustomInput
-                      ? [
-                    BoxShadow(
-                      color: Colors.black,
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    ),
-                  ]
-                      : null,
-                ),
-                child: Text(
-                  'Select Range',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: bodyFontSize - 1,
-                    fontFamily: 'Exo2',
-                    fontWeight: !_useCustomInput ? FontWeight.w600 : FontWeight.normal,
-                    color: !_useCustomInput ? Colors.black87 : Colors.black54,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDropdownSelection(double bodyFontSize, bool isTablet) {
+  Widget _buildPrimaryDropdown(double bodyFontSize, bool isTablet) {
     return Column(
-      key: const ValueKey('dropdown'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          'Previous reports',
+          style: TextStyle(
+            fontSize: bodyFontSize - 2,
+            fontFamily: 'Exo2',
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 8),
         DropdownButtonFormField<String>(
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
@@ -303,21 +240,18 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
             fillColor: Colors.grey.shade50,
           ),
           hint: Text(
-            'Please Select',
+            'Please select',
             style: TextStyle(
               fontFamily: 'Exo2',
               fontSize: bodyFontSize,
               color: Colors.black54,
             ),
           ),
-          value: _selectedOption,
+          value: _selected,
           items: [
-            '1 tenant',
-            '2 tenants',
-            '3 tenants',
-            '4-6 tenants',
-            '7-10 tenants',
-            'More than 10 tenants',
+            'Yes, I have reported this before',
+            'No, this is the first time',
+            'Not sure',
           ].map((label) => DropdownMenuItem(
             value: label,
             child: Text(
@@ -331,9 +265,12 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
           )).toList(),
           onChanged: (value) {
             setState(() {
-              _selectedOption = value;
-              _customNumber = null;
-              _customController.clear();
+              _selected = value;
+              _showAdditionalQuestions = value?.startsWith('Yes') ?? false;
+              if (!_showAdditionalQuestions) {
+                _timeframe = null;
+                _resolution = null;
+              }
             });
           },
           icon: Icon(
@@ -342,47 +279,9 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
             color: Colors.black54,
           ),
         ),
-
-        // Information box
-        Container(
-          margin: const EdgeInsets.only(top: 16),
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: Colors.blue.shade50,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.blue.shade200),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                Icons.info_outline,
-                size: 20,
-                color: Colors.blue.shade700,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  'Include all residents, including children',
-                  style: TextStyle(
-                    fontSize: bodyFontSize - 2,
-                    fontFamily: 'Exo2',
-                    color: Colors.blue.shade700,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }
-
-
-
-
-
-
 
   Widget _buildBottomSection(BuildContext context, double buttonHeight, double bodyFontSize, bool isTablet) {
     final isValid = _isValidSelection();
@@ -395,7 +294,7 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
           padding: EdgeInsets.symmetric(vertical: isTablet ? 20 : 16),
           child: Row(
             children: [
-              // Previous button (optional)
+              // Previous button
               const SizedBox(width: 12),
               // Next button
               Expanded(
@@ -405,21 +304,23 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
                   child: ElevatedButton.icon(
                     onPressed: isValid
                         ? () {
-                      // Navigate to next screen
-                      final tenantCount = _useCustomInput
-                          ? _customNumber.toString()
-                          : _selectedOption;
+                      // Prepare data
+                      final reportData = {
+                        'previouslyReported': _selected,
+                        if (_timeframe != null) 'timeframe': _timeframe,
+                        if (_resolution != null) 'resolution': _resolution,
+                      };
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Selected: $tenantCount'),
+                          content: Text('Report data: ${reportData.toString()}'),
                           duration: const Duration(seconds: 2),
                         ),
                       );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(
-                      //     builder: (context) => const PreviousDampMouldScreen(),
+                      //     builder: (context) => const MoveFurnitureWithoutAssistanceScreen(),
                       //   ),
                       // );
                     }
@@ -482,7 +383,14 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
   }
 
   bool _isValidSelection() {
-    return _selectedOption != null || (_customNumber != null && _customNumber! > 0);
+    if (_selected == null) return false;
+
+    // If "Yes" is selected, require additional fields
+    if (_selected!.startsWith('Yes')) {
+      return _timeframe != null && _resolution != null;
+    }
+
+    return true;
   }
 
   void _showBackDialog(BuildContext context) {

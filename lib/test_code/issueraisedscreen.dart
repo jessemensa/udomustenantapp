@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'hazards/hazardsscreen.dart';
 import 'reports/reportscreen.dart';
 import 'settings/settings.dart';
+import 'numberoftenantscreen.dart';
 
 
-// ---------------------------------------------
+
 
 class IssueRaisedScreen extends StatefulWidget {
   const IssueRaisedScreen({super.key});
@@ -14,15 +15,27 @@ class IssueRaisedScreen extends StatefulWidget {
 }
 
 class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
+  // keeps track of the tab selected
   int _selectedIndex = 0;
+  // the specific day and month the user picked?
+  // why is it late ? -> the variable doesnt have any value now but will be given one
   late DateTime selectedDate;
   late DateTime currentMonth;
+  // a flag to check whether the calender was expanded
   bool _calendarExpanded = true;
 
-  // Date constraints
+  // Date constraints -> they limit what the user can pick ?
+  // why are they also late -> means the variables will be assigned later, will be assigned before use.
+  // final -> means the variable can be assigned only once
   late final DateTime _minDate;
   late final DateTime _maxDate;
 
+
+  // overriding the default init state, flutter will call my version
+  // super -> calls the parents init state class
+  // gets the current date time and final means it cannot be changed
+  // selectedDate once the UI is built is the current day, year and month
+  // currentMonth -> Creates a DateTime for the first day of the current month. (IS THIS NECESSARY ?)
   @override
   void initState() {
     super.initState();
@@ -31,7 +44,9 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
     currentMonth = DateTime(now.year, now.month, 1);
 
     // Can't report issues more than 2 years old or in the future
+    // furthest you can go is exactly two years from today. (TEST TO SEE IF IT CHANGES EVERYDAY, IF THATS THE CASE THEN IT NEEDS TO CHANGE)
     _minDate = DateTime(now.year - 2, now.month, now.day);
+    // set Date to today
     _maxDate = now;
   }
 
@@ -52,11 +67,16 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
     );
   }
 
+
+  // Method returns bottom navigation bar widget
   Widget _buildBottomNavigationBar(BuildContext context) {
+    // if width of the screen is greater than 600 then its a Tablet
     final isTablet = MediaQuery.of(context).size.width > 600;
 
     return BottomNavigationBar(
+      // selected tab in the navigation bar
       currentIndex: _selectedIndex,
+      // features of navigation bar
       type: BottomNavigationBarType.fixed,
       backgroundColor: const Color(0xFF5B6FFF),
       selectedItemColor: Colors.white,
@@ -106,22 +126,28 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
 
 
 
-
+  // Method that returns a layoutbuilder widget -> Building the Date Selection Part
+  // LayoutBuilder gives you the constraints (max width/height) of the available screen space.
   Widget _buildDateSelectionScreen(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+
+        // gets you the height and width of the screen
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
+        // if the width is greater than 600 then its a tablet
         final isTablet = width > 600;
-        final isDesktop = width > 840;
+        // it is landscape if width is greater than the height
         final isLandscape = width > height;
-
-        final horizontalPadding = isDesktop
-            ? 48.0
-            : isTablet
+        // if its a tablet in a landscape mode, it uses 15% of the screen width as its padding
+        // in portrait mode it uses 10% of the screen as its padding
+        // if its a phone it uses a fixed 24.0 pixels as its padding
+        final horizontalPadding = isTablet
             ? (isLandscape ? width * 0.15 : width * 0.1)
             : 24.0;
-        final maxWidth = isDesktop ? 720.0 : (isTablet ? 600.0 : double.infinity);
+        // If it's a tablet: limits content width to maximum 600 pixels
+        // If it's a phone: allows unlimited width (double.infinity)
+        final maxWidth = isTablet ? 600.0 : double.infinity;
 
         return SafeArea(
           child: Center(
@@ -133,15 +159,16 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Header with back button
-                    _buildHeader(isTablet, isDesktop),
+                    _buildHeader(isTablet),
 
                     // Calendar or collapsed selected date
                     Expanded(
                       child: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
+                        // if Calender expanded is false, then build calender else buildCollapsedDate
                         child: _calendarExpanded
                             ? _buildCalendar(context, constraints)
-                            : _buildCollapsedDate(isTablet, isDesktop),
+                            : _buildCollapsedDate(isTablet),
                       ),
                     ),
 
@@ -151,7 +178,7 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
                         top: isTablet ? 32.0 : 24.0,
                         bottom: isTablet ? 32.0 : 24.0,
                       ),
-                      child: _buildNextButton(context, isTablet, isDesktop),
+                      child: _buildNextButton(context, isTablet),
                     ),
                   ],
                 ),
@@ -163,7 +190,9 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
     );
   }
 
-  Widget _buildHeader(bool isTablet, bool isDesktop) {
+  // Method that returns padding widget, used to Build the header
+  // which shows user Text(When did the issue start) and the arrow back button
+  Widget _buildHeader(bool isTablet) {
     return Padding(
       padding: EdgeInsets.only(
         top: isTablet ? 32.0 : 24.0,
@@ -193,14 +222,13 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
               'When did the issue start?',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: isDesktop ? 32 : (isTablet ? 28 : 22),
+                fontSize: isTablet ? 28 : 22,
                 fontWeight: FontWeight.w600,
                 fontFamily: 'Exo2',
                 color: Colors.black87,
               ),
             ),
           ),
-
           // Spacer for balance
           SizedBox(width: isTablet ? 56 : 48),
         ],
@@ -208,7 +236,8 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
     );
   }
 
-  Widget _buildCollapsedDate(bool isTablet, bool isDesktop) {
+  // method that returns a Gesture Detector Widget
+  Widget _buildCollapsedDate(bool isTablet) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -239,7 +268,7 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
             Text(
               _formatDate(selectedDate),
               style: TextStyle(
-                fontSize: isDesktop ? 32 : (isTablet ? 28 : 24),
+                fontSize: isTablet ? 28 : 24,
                 fontFamily: 'Exo2',
                 fontWeight: FontWeight.w600,
                 color: Colors.black87,
@@ -267,6 +296,7 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
     );
   }
 
+  // Method that returns a widget
   Widget _buildCalendar(BuildContext context, BoxConstraints constraints) {
     final width = constraints.maxWidth;
     final isTablet = width > 600;
@@ -513,23 +543,23 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
     return List.generate(42, (index) => startDate.add(Duration(days: index)));
   }
 
-  Widget _buildNextButton(BuildContext context, bool isTablet, bool isDesktop) {
+  Widget _buildNextButton(BuildContext context, bool isTablet) {
     final isValidDate = !_isDateOutOfRange();
 
     return SizedBox(
       width: double.infinity,
-      height: isDesktop ? 68 : (isTablet ? 64 : 56),
+      height: isTablet ? 64 : 56,
       child: ElevatedButton.icon(
         onPressed: isValidDate
             ? () {
           // Navigate to next screen
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Selected date: ${_formatDate(selectedDate)}'),
-              duration: const Duration(seconds: 2),
-            ),
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => const NumberOfTenantsScreen()
+              )
           );
         }
+
             : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.black,
@@ -543,7 +573,7 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
         label: Text(
           'Next',
           style: TextStyle(
-            fontSize: isDesktop ? 20 : (isTablet ? 18 : 16),
+            fontSize: isTablet ? 18 : 16,
             fontWeight: FontWeight.w600,
             fontFamily: 'Exo2',
           ),

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:udomustenantapp/test_code/roomsinpropertyscreen.dart';
 // import 'disabilityorbedboundscreen.dart';
+
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
 class MentalHealthScreen extends StatefulWidget {
   const MentalHealthScreen({super.key});
@@ -29,10 +34,9 @@ class _MentalHealthScreenState extends State<MentalHealthScreen> {
         index: _selectedIndex,
         children: [
           _buildMainScreen(context),
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -415,7 +419,7 @@ class _MentalHealthScreenState extends State<MentalHealthScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Number of residents with disability',
+          'Number of residents with this issue',
           style: TextStyle(
             fontSize: bodyFontSize - 1,
             fontFamily: 'Exo2',
@@ -604,12 +608,18 @@ class _MentalHealthScreenState extends State<MentalHealthScreen> {
                           'numberOfPregnantResidents': _numberOfResidentsWithDisability,
                       };
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Information saved securely'),
-                          duration: const Duration(seconds: 2),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const RoomsInPropertyScreen(),
                         ),
                       );
+
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('Information saved securely'),
+                      //     duration: const Duration(seconds: 2),
+                      //   ),
+                      // );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(

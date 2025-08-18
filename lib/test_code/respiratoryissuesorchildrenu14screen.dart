@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'residentswithpregnancyscreen.dart';
+import 'residentswithpregnancyscreen.dart';
+
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
 // Renamed to better reflect the purpose
 class VulnerableResidentsScreen extends StatefulWidget {
@@ -14,7 +18,7 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
   bool? _hasChildrenUnder14;
   int? _numberOfChildren;
   bool? _hasRespiratoryConditions;
-  int? _numberOfRespiratoryResidents;
+  // int? _numberOfRespiratoryResidents;
   List<String> _respiratoryConditions = [];
 
   final TextEditingController _childrenController = TextEditingController();
@@ -37,10 +41,9 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
         index: _selectedIndex,
         children: [
           _buildMainScreen(context),
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -513,7 +516,8 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
 
   Widget _buildBottomSection(BuildContext context, double buttonHeight,
       double bodyFontSize, bool isTablet) {
-    final isValid = _hasChildrenUnder14 != null && _hasRespiratoryConditions != null;
+    final isValid = _hasChildrenUnder14 != null;
+        //  && _hasRespiratoryConditions != null;
 
     return Column(
       children: [
@@ -538,16 +542,24 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
                         if (_numberOfChildren != null)
                           'numberOfChildren': _numberOfChildren,
                         'hasRespiratoryConditions': _hasRespiratoryConditions,
+
                         if (_respiratoryConditions.isNotEmpty)
                           'conditions': _respiratoryConditions,
                       };
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Vulnerable residents data saved'),
-                          duration: const Duration(seconds: 2),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const PregnancyInformationScreen(),
                         ),
                       );
+
+
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('Vulnerable residents data saved'),
+                      //     duration: const Duration(seconds: 2),
+                      //   ),
+                      // );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(

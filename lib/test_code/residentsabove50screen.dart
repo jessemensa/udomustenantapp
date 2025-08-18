@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'respiratoryissuesorchildrenu14screen.dart';
+import 'respiratoryissuesorchildrenu14screen.dart';
+
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
 class ResidentsAbove50Screen extends StatefulWidget {
   const ResidentsAbove50Screen({super.key});
@@ -29,10 +33,9 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
         index: _selectedIndex,
         children: [
           _buildMainScreen(context),
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -556,12 +559,18 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
                           'numberOfResidents50Plus': _numberOfResidents,
                       };
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Demographic data saved'),
-                          duration: const Duration(seconds: 2),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const VulnerableResidentsScreen(),
                         ),
                       );
+
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('Demographic data saved'),
+                      //     duration: const Duration(seconds: 2),
+                      //   ),
+                      // );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(

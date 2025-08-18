@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'disabilityorbedboundscreen.dart';
+import 'waterleakscreen.dart';
+
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
 class ResidentsWithHeatingScreen extends StatefulWidget {
   const ResidentsWithHeatingScreen({super.key});
@@ -29,10 +33,9 @@ class _ResidentsWithHeatingScreenState extends State<ResidentsWithHeatingScreen>
         index: _selectedIndex,
         children: [
           _buildMainScreen(context),
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -197,10 +200,10 @@ class _ResidentsWithHeatingScreenState extends State<ResidentsWithHeatingScreen>
 
                             // Show additional fields if "Yes" is selected
                             if (_showAdditionalInfo) ...[
-                              SizedBox(height: isTablet ? 24 : 16),
-                              _buildNumberInput(bodyFontSize, isTablet),
+                              SizedBox(height: isTablet ? 24 : 2),
+                              // _buildNumberInput(bodyFontSize, isTablet),
 
-                              SizedBox(height: isTablet ? 24 : 16),
+                              SizedBox(height: isTablet ? 24 : 2),
                               // _buildTrimesterDropdown(bodyFontSize, isTablet),
                             ],
 
@@ -410,115 +413,115 @@ class _ResidentsWithHeatingScreenState extends State<ResidentsWithHeatingScreen>
     );
   }
 
-  Widget _buildNumberInput(double bodyFontSize, bool isTablet) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Number of residents with disability',
-          style: TextStyle(
-            fontSize: bodyFontSize - 1,
-            fontFamily: 'Exo2',
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            // Quick select buttons for 1-2
-            ...List.generate(2, (index) {
-              final number = index + 1;
-              final isSelected = _numberOfResidentsWithDisability == number;
-
-              return Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: OutlinedButton(
-                  onPressed: () {
-                    setState(() {
-                      _numberOfResidentsWithDisability = number;
-                      _numberController.text = number.toString();
-                    });
-                  },
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(
-                      color: isSelected
-                          ? const Color(0xFF5B6FFF)
-                          : Colors.grey.shade300,
-                      width: isSelected ? 2 : 1,
-                    ),
-                    backgroundColor: isSelected
-                        ? const Color(0xFF5B6FFF).withOpacity(0.1)
-                        : Colors.white,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isTablet ? 24 : 20,
-                      vertical: isTablet ? 12 : 8,
-                    ),
-                  ),
-                  child: Text(
-                    number.toString(),
-                    style: TextStyle(
-                      fontSize: bodyFontSize - 1,
-                      fontFamily: 'Exo2',
-                      color: isSelected
-                          ? const Color(0xFF5B6FFF)
-                          : Colors.black87,
-                    ),
-                  ),
-                ),
-              );
-            }),
-
-            const SizedBox(width: 8),
-
-            // Custom input for more
-            Expanded(
-              child: TextFormField(
-                controller: _numberController,
-                keyboardType: TextInputType.number,
-                style: TextStyle(
-                  fontSize: bodyFontSize,
-                  fontFamily: 'Exo2',
-                  color: Colors.black87,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Enter number',
-                  hintStyle: TextStyle(
-                    fontSize: bodyFontSize - 1,
-                    fontFamily: 'Exo2',
-                    color: Colors.black54,
-                  ),
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: isTablet ? 16 : 12,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xFF5B6FFF), width: 2),
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey.shade50,
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _numberOfResidentsWithDisability = int.tryParse(value);
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  // Widget _buildNumberInput(double bodyFontSize, bool isTablet) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         'Number of residents with disability',
+  //         style: TextStyle(
+  //           fontSize: bodyFontSize - 1,
+  //           fontFamily: 'Exo2',
+  //           fontWeight: FontWeight.w600,
+  //           color: Colors.black87,
+  //         ),
+  //       ),
+  //       const SizedBox(height: 8),
+  //       Row(
+  //         children: [
+  //           // Quick select buttons for 1-2
+  //           ...List.generate(2, (index) {
+  //             final number = index + 1;
+  //             final isSelected = _numberOfResidentsWithDisability == number;
+  //
+  //             return Padding(
+  //               padding: const EdgeInsets.only(right: 8.0),
+  //               child: OutlinedButton(
+  //                 onPressed: () {
+  //                   setState(() {
+  //                     _numberOfResidentsWithDisability = number;
+  //                     _numberController.text = number.toString();
+  //                   });
+  //                 },
+  //                 style: OutlinedButton.styleFrom(
+  //                   side: BorderSide(
+  //                     color: isSelected
+  //                         ? const Color(0xFF5B6FFF)
+  //                         : Colors.grey.shade300,
+  //                     width: isSelected ? 2 : 1,
+  //                   ),
+  //                   backgroundColor: isSelected
+  //                       ? const Color(0xFF5B6FFF).withOpacity(0.1)
+  //                       : Colors.white,
+  //                   padding: EdgeInsets.symmetric(
+  //                     horizontal: isTablet ? 24 : 20,
+  //                     vertical: isTablet ? 12 : 8,
+  //                   ),
+  //                 ),
+  //                 child: Text(
+  //                   number.toString(),
+  //                   style: TextStyle(
+  //                     fontSize: bodyFontSize - 1,
+  //                     fontFamily: 'Exo2',
+  //                     color: isSelected
+  //                         ? const Color(0xFF5B6FFF)
+  //                         : Colors.black87,
+  //                   ),
+  //                 ),
+  //               ),
+  //             );
+  //           }),
+  //
+  //           const SizedBox(width: 8),
+  //
+  //           // Custom input for more
+  //           Expanded(
+  //             child: TextFormField(
+  //               controller: _numberController,
+  //               keyboardType: TextInputType.number,
+  //               style: TextStyle(
+  //                 fontSize: bodyFontSize,
+  //                 fontFamily: 'Exo2',
+  //                 color: Colors.black87,
+  //               ),
+  //               decoration: InputDecoration(
+  //                 hintText: 'Enter number',
+  //                 hintStyle: TextStyle(
+  //                   fontSize: bodyFontSize - 1,
+  //                   fontFamily: 'Exo2',
+  //                   color: Colors.black54,
+  //                 ),
+  //                 contentPadding: EdgeInsets.symmetric(
+  //                   horizontal: 16,
+  //                   vertical: isTablet ? 16 : 12,
+  //                 ),
+  //                 border: OutlineInputBorder(
+  //                   borderRadius: BorderRadius.circular(12),
+  //                   borderSide: BorderSide(color: Colors.grey.shade300),
+  //                 ),
+  //                 enabledBorder: OutlineInputBorder(
+  //                   borderRadius: BorderRadius.circular(12),
+  //                   borderSide: BorderSide(color: Colors.grey.shade300),
+  //                 ),
+  //                 focusedBorder: OutlineInputBorder(
+  //                   borderRadius: BorderRadius.circular(12),
+  //                   borderSide: const BorderSide(color: Color(0xFF5B6FFF), width: 2),
+  //                 ),
+  //                 filled: true,
+  //                 fillColor: Colors.grey.shade50,
+  //               ),
+  //               onChanged: (value) {
+  //                 setState(() {
+  //                   _numberOfResidentsWithDisability = int.tryParse(value);
+  //                 });
+  //               },
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
 
   Widget _buildContextMessage(double bodyFontSize, bool isTablet) {
@@ -604,12 +607,19 @@ class _ResidentsWithHeatingScreenState extends State<ResidentsWithHeatingScreen>
                           'numberOfPregnantResidents': _numberOfResidentsWithDisability,
                       };
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Information saved securely'),
-                          duration: const Duration(seconds: 2),
+
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const WaterLeaksScreen(),
                         ),
                       );
+
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('Information saved securely'),
+                      //     duration: const Duration(seconds: 2),
+                      //   ),
+                      // );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(

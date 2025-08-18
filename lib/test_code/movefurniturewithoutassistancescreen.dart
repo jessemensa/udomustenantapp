@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'residentsabove50screen.dart';
+import 'residentsabove50screen.dart';
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
 class MoveFurnitureWithoutAssistanceScreen extends StatefulWidget {
   const MoveFurnitureWithoutAssistanceScreen({super.key});
@@ -12,8 +15,8 @@ class MoveFurnitureWithoutAssistanceScreen extends StatefulWidget {
 class _MoveFurnitureWithoutAssistanceScreenState
     extends State<MoveFurnitureWithoutAssistanceScreen> {
   String? _mobilityLevel;
-  List<String> _assistanceNeeded = [];
-  String? _additionalSupport;
+  // List<String> _assistanceNeeded = [];
+  // String? _additionalSupport;
   int _selectedIndex = 0;
   bool _showAssistanceOptions = false;
 
@@ -25,10 +28,9 @@ class _MoveFurnitureWithoutAssistanceScreenState
         index: _selectedIndex,
         children: [
           _buildMainScreen(context),
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -90,10 +92,10 @@ class _MoveFurnitureWithoutAssistanceScreenState
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
+          // final height = constraints.maxHeight;
           final isTablet = width > 600;
           final isDesktop = width > 840;
-          final isLandscape = width > height;
+          // final isLandscape = width > height;
 
           // Adaptive sizing
           final double horizontalPadding = isDesktop
@@ -181,11 +183,11 @@ class _MoveFurnitureWithoutAssistanceScreenState
 
                             // Show assistance options if needed
                             if (_showAssistanceOptions) ...[
-                              SizedBox(height: isTablet ? 24 : 16),
-                              _buildAssistanceOptions(bodyFontSize, isTablet),
+                              SizedBox(height: isTablet ? 24 : 2),
+                              // _buildAssistanceOptions(bodyFontSize, isTablet),
 
-                              SizedBox(height: isTablet ? 24 : 16),
-                              _buildAdditionalSupportField(bodyFontSize, isTablet),
+                              SizedBox(height: isTablet ? 24 : 2),
+                              // _buildAdditionalSupportField(bodyFontSize, isTablet),
                             ],
 
                             // Information box
@@ -334,10 +336,14 @@ class _MoveFurnitureWithoutAssistanceScreenState
               _showAssistanceOptions = value != null &&
                   (value.contains('No') || value.contains('Sometimes') ||
                       value.contains('light'));
-              if (!_showAssistanceOptions) {
-                _assistanceNeeded.clear();
-                _additionalSupport = null;
-              }
+
+
+              // if (!_showAssistanceOptions) {
+              //   _assistanceNeeded.clear();
+              //   // _additionalSupport = null;
+              // }
+
+
             });
           },
           icon: Icon(
@@ -350,148 +356,156 @@ class _MoveFurnitureWithoutAssistanceScreenState
     );
   }
 
-  Widget _buildAssistanceOptions(double bodyFontSize, bool isTablet) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'What assistance would be helpful? (Select all that apply)',
-          style: TextStyle(
-            fontSize: bodyFontSize - 1,
-            fontFamily: 'Exo2',
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade300),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            children: [
-              _buildCheckboxTile(
-                'Help moving furniture during inspection',
-                'furniture',
-                bodyFontSize,
-              ),
-              Divider(height: 1, color: Colors.grey.shade300),
-              _buildCheckboxTile(
-                'Extra time for property access',
-                'time',
-                bodyFontSize,
-              ),
-              Divider(height: 1, color: Colors.grey.shade300),
-              _buildCheckboxTile(
-                'Ground floor access only',
-                'ground',
-                bodyFontSize,
-              ),
-              Divider(height: 1, color: Colors.grey.shade300),
-              _buildCheckboxTile(
-                'Support person present during visit',
-                'support',
-                bodyFontSize,
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildAssistanceOptions(double bodyFontSize, bool isTablet) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         'What assistance would be helpful? (Select all that apply)',
+  //         style: TextStyle(
+  //           fontSize: bodyFontSize - 1,
+  //           fontFamily: 'Exo2',
+  //           fontWeight: FontWeight.w600,
+  //           color: Colors.black87,
+  //         ),
+  //       ),
+  //       const SizedBox(height: 12),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           border: Border.all(color: Colors.grey.shade300),
+  //           borderRadius: BorderRadius.circular(12),
+  //         ),
+  //         child: Column(
+  //           children: [
+  //             _buildCheckboxTile(
+  //               'Help moving furniture during inspection',
+  //               'furniture',
+  //               bodyFontSize,
+  //             ),
+  //             Divider(height: 1, color: Colors.grey.shade300),
+  //             _buildCheckboxTile(
+  //               'Extra time for property access',
+  //               'time',
+  //               bodyFontSize,
+  //             ),
+  //             Divider(height: 1, color: Colors.grey.shade300),
+  //             _buildCheckboxTile(
+  //               'Ground floor access only',
+  //               'ground',
+  //               bodyFontSize,
+  //             ),
+  //             Divider(height: 1, color: Colors.grey.shade300),
+  //             _buildCheckboxTile(
+  //               'Support person present during visit',
+  //               'support',
+  //               bodyFontSize,
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Widget _buildCheckboxTile(String title, String value, double fontSize) {
-    final isSelected = _assistanceNeeded.contains(value);
 
-    return ListTile(
-      onTap: () {
-        setState(() {
-          if (isSelected) {
-            _assistanceNeeded.remove(value);
-          } else {
-            _assistanceNeeded.add(value);
-          }
-        });
-      },
-      leading: Checkbox(
-        value: isSelected,
-        onChanged: (bool? newValue) {
-          setState(() {
-            if (newValue == true) {
-              _assistanceNeeded.add(value);
-            } else {
-              _assistanceNeeded.remove(value);
-            }
-          });
-        },
-        activeColor: const Color(0xFF5B6FFF),
-      ),
-      title: Text(
-        title,
-        style: TextStyle(
-          fontSize: fontSize - 1,
-          fontFamily: 'Exo2',
-          color: Colors.black87,
-        ),
-      ),
-      tileColor: isSelected ? const Color(0xFF5B6FFF).withOpacity(0.05) : null,
-    );
-  }
 
-  Widget _buildAdditionalSupportField(double bodyFontSize, bool isTablet) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Any other support needs? (Optional)',
-          style: TextStyle(
-            fontSize: bodyFontSize - 1,
-            fontFamily: 'Exo2',
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          maxLines: 3,
-          style: TextStyle(
-            fontSize: bodyFontSize,
-            fontFamily: 'Exo2',
-            color: Colors.black87,
-          ),
-          decoration: InputDecoration(
-            hintText: 'Please describe any additional support you may need...',
-            hintStyle: TextStyle(
-              fontSize: bodyFontSize - 1,
-              fontFamily: 'Exo2',
-              color: Colors.black54,
-            ),
-            contentPadding: EdgeInsets.all(isTablet ? 16 : 12),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey.shade300),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey.shade300),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Color(0xFF5B6FFF), width: 2),
-            ),
-            filled: true,
-            fillColor: Colors.grey.shade50,
-          ),
-          onChanged: (value) {
-            setState(() {
-              _additionalSupport = value.isEmpty ? null : value;
-            });
-          },
-        ),
-      ],
-    );
-  }
+  // Widget _buildCheckboxTile(String title, String value, double fontSize) {
+  //   final isSelected = _assistanceNeeded.contains(value);
+  //
+  //   return ListTile(
+  //     onTap: () {
+  //       setState(() {
+  //         if (isSelected) {
+  //           _assistanceNeeded.remove(value);
+  //         } else {
+  //           _assistanceNeeded.add(value);
+  //         }
+  //       });
+  //     },
+  //     leading: Checkbox(
+  //       value: isSelected,
+  //       onChanged: (bool? newValue) {
+  //         setState(() {
+  //           if (newValue == true) {
+  //             _assistanceNeeded.add(value);
+  //           } else {
+  //             _assistanceNeeded.remove(value);
+  //           }
+  //         });
+  //       },
+  //       activeColor: const Color(0xFF5B6FFF),
+  //     ),
+  //     title: Text(
+  //       title,
+  //       style: TextStyle(
+  //         fontSize: fontSize - 1,
+  //         fontFamily: 'Exo2',
+  //         color: Colors.black87,
+  //       ),
+  //     ),
+  //     tileColor: isSelected ? const Color(0xFF5B6FFF).withOpacity(0.05) : null,
+  //   );
+  // }
+
+
+
+
+  //
+  // Widget _buildAdditionalSupportField(double bodyFontSize, bool isTablet) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         'Any other support needs? (Optional)',
+  //         style: TextStyle(
+  //           fontSize: bodyFontSize - 1,
+  //           fontFamily: 'Exo2',
+  //           fontWeight: FontWeight.w600,
+  //           color: Colors.black87,
+  //         ),
+  //       ),
+  //       const SizedBox(height: 8),
+  //       TextFormField(
+  //         maxLines: 3,
+  //         style: TextStyle(
+  //           fontSize: bodyFontSize,
+  //           fontFamily: 'Exo2',
+  //           color: Colors.black87,
+  //         ),
+  //         decoration: InputDecoration(
+  //           hintText: 'Please describe any additional support you may need...',
+  //           hintStyle: TextStyle(
+  //             fontSize: bodyFontSize - 1,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.black54,
+  //           ),
+  //           contentPadding: EdgeInsets.all(isTablet ? 16 : 12),
+  //           border: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(12),
+  //             borderSide: BorderSide(color: Colors.grey.shade300),
+  //           ),
+  //           enabledBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(12),
+  //             borderSide: BorderSide(color: Colors.grey.shade300),
+  //           ),
+  //           focusedBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(12),
+  //             borderSide: const BorderSide(color: Color(0xFF5B6FFF), width: 2),
+  //           ),
+  //           filled: true,
+  //           fillColor: Colors.grey.shade50,
+  //         ),
+  //         onChanged: (value) {
+  //           setState(() {
+  //             _additionalSupport = value.isEmpty ? null : value;
+  //           });
+  //         },
+  //       ),
+  //     ],
+  //   );
+  // }
+
+
 
   Widget _buildInfoBox(double bodyFontSize, bool isTablet) {
     IconData icon;
@@ -573,19 +587,30 @@ class _MoveFurnitureWithoutAssistanceScreenState
                   child: ElevatedButton.icon(
                     onPressed: isValid
                         ? () {
-                      // Prepare data
-                      final assistanceData = {
-                        'mobilityLevel': _mobilityLevel,
-                        'assistanceNeeded': _assistanceNeeded,
-                        'additionalSupport': _additionalSupport,
-                      };
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Assistance data saved'),
-                          duration: const Duration(seconds: 2),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ResidentsAbove50Screen(),
                         ),
                       );
+
+
+
+                      // Prepare data
+                      // final assistanceData = {
+                      //   'mobilityLevel': _mobilityLevel,
+                      //   'assistanceNeeded': _assistanceNeeded,
+                      //   'additionalSupport': _additionalSupport,
+                      // };
+
+
+
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('Assistance data saved'),
+                      //     duration: const Duration(seconds: 2),
+                      //   ),
+                      // );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(
@@ -604,7 +629,7 @@ class _MoveFurnitureWithoutAssistanceScreenState
                       ),
                       elevation: isValid ? 2 : 0,
                     ),
-                    icon: const Icon(Icons.arrow_forward),
+                    // icon: const Icon(Icons.arrow_forward),
                     label: Text(
                       'Next',
                       style: TextStyle(
@@ -623,34 +648,34 @@ class _MoveFurnitureWithoutAssistanceScreenState
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             fontSize: 24,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         const Text(
+  //           'Coming Soon',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _showBackDialog(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width > 600;

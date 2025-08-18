@@ -1,4 +1,5 @@
  import 'package:flutter/material.dart';
+ import 'issueraisedscreen.dart';
  import 'hazards/hazardsscreen.dart';
  import 'reports/reportscreen.dart';
  import 'settings/settings.dart';
@@ -174,19 +175,13 @@
                              context,
                              'Send a Complaint',
                              icon: Icons.send,
-                             onPressed: () {
-                               // TODO: change to navigate to IssueRaisedDate Screen
-                               Navigator.push(
-                                 context,
-                                 MaterialPageRoute(
-                                   builder: (context) => const Scaffold(
-                                     body: Center(
-                                       child: Text('Complaint Form - Coming Soon'),
-                                     ),
-                                   ),
-                                 ),
-                               );
-                             },
+                               onPressed: () => {
+                                 Navigator.of(context).push(
+                                     MaterialPageRoute(
+                                         builder: (context) => IssueRaisedScreen()
+                                     )
+                                 )
+                               }
                            ),
                            SizedBox(height: isTablet ? 24 : 20),
                            _buildActionButton(

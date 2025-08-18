@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:udomustenantapp/test_code/previousdampandmouldscreen.dart';
+// import 'package:flutter/services.dart';
 // import 'previousdampandmouldscreen.dart';
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
-class NumberofTenantsScreen extends StatefulWidget {
-  const NumberofTenantsScreen({super.key});
+class NumberOfTenantsScreen extends StatefulWidget {
+  const NumberOfTenantsScreen({super.key});
 
   @override
-  State<NumberofTenantsScreen> createState() => _NumberofTenantsScreenState();
+  State<NumberOfTenantsScreen> createState() => _NumberOfTenantsScreenState();
 }
 
-class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
+class _NumberOfTenantsScreenState extends State<NumberOfTenantsScreen> {
   String? _selectedOption;
   int? _customNumber;
   final TextEditingController _customController = TextEditingController();
@@ -30,10 +34,9 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
         index: _selectedIndex,
         children: [
           _buildMainScreen(context),
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -95,10 +98,10 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
+          // final height = constraints.maxHeight;
           final isTablet = width > 600;
           final isDesktop = width > 840;
-          final isLandscape = width > height;
+          // final isLandscape = width > height;
 
           // Adaptive sizing
           final double horizontalPadding = isDesktop
@@ -405,17 +408,24 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
                   child: ElevatedButton.icon(
                     onPressed: isValid
                         ? () {
-                      // Navigate to next screen
-                      final tenantCount = _useCustomInput
-                          ? _customNumber.toString()
-                          : _selectedOption;
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Selected: $tenantCount'),
-                          duration: const Duration(seconds: 2),
-                        ),
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => const PreviousDampMouldScreen()
+                          )
                       );
+
+                      // Navigate to next screen
+                      // final tenantCount = _useCustomInput
+                      //     ? _customNumber.toString()
+                      //     : _selectedOption;
+                      //
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('Selected: $tenantCount'),
+                      //     duration: const Duration(seconds: 2),
+                      //   ),
+                      // );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(
@@ -452,34 +462,34 @@ class _NumberofTenantsScreenState extends State<NumberofTenantsScreen> {
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             fontSize: 24,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         const Text(
+  //           'Coming Soon',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   bool _isValidSelection() {
     return _selectedOption != null || (_customNumber != null && _customNumber! > 0);

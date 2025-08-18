@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'ventilationissuescreen.dart';
+import 'ventilationissuescreen.dart';
+
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
 class WaterLeaksDescribeProblemScreen extends StatefulWidget {
   const WaterLeaksDescribeProblemScreen({super.key});
@@ -34,10 +38,9 @@ class _WaterLeaksDescribeProblemScreenState extends State<WaterLeaksDescribeProb
         index: _selectedIndex,
         children: [
           _buildMainScreen(context), // Home content
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -219,12 +222,12 @@ class _WaterLeaksDescribeProblemScreenState extends State<WaterLeaksDescribeProb
             child: ElevatedButton.icon(
               onPressed: _isValid
                   ? () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(builder: (context) => const VentilationIssuesScreen()),
-                // );
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const VentilationIssueScreen()),
+                );
               }
                   : null,
-              icon: const Icon(Icons.arrow_forward),
+             // icon: const Icon(Icons.arrow_forward),
               label: Text(
                 'Next',
                 style: TextStyle(

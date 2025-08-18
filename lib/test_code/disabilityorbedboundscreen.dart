@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'disabilityorbedboundscreen.dart';
+import 'healthconditionorimmunesystemscreen.dart';
+
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
 class DisabilityOrBedBoundScreen extends StatefulWidget {
   const DisabilityOrBedBoundScreen({super.key});
@@ -29,10 +33,9 @@ class _DisabilityOrBedBoundScreenState extends State<DisabilityOrBedBoundScreen>
         index: _selectedIndex,
         children: [
           _buildMainScreen(context),
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -597,19 +600,27 @@ class _DisabilityOrBedBoundScreenState extends State<DisabilityOrBedBoundScreen>
                   child: ElevatedButton.icon(
                     onPressed: isValid
                         ? () {
-                      // Prepare data
-                      final pregnancyData = {
-                        'pregnancyStatus': _disabilityStatus,
-                        if (_numberOfResidentsWithDisability != null)
-                          'numberOfPregnantResidents': _numberOfResidentsWithDisability,
-                      };
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Information saved securely'),
-                          duration: const Duration(seconds: 2),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HealthConditionOrImmuneSystemScreen(),
                         ),
                       );
+
+
+                      // Prepare data
+                      // final pregnancyData = {
+                      //   'pregnancyStatus': _disabilityStatus,
+                      //   if (_numberOfResidentsWithDisability != null)
+                      //     'numberOfPregnantResidents': _numberOfResidentsWithDisability,
+                      // };
+
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('Information saved securely'),
+                      //     duration: const Duration(seconds: 2),
+                      //   ),
+                      // );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(

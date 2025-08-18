@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:udomustenantapp/test_code/waterleakdescriptionscreen.dart';
 // import 'disabilityorbedboundscreen.dart';
 
+import 'ventilationissuedescription.dart';
+
 import 'hazards/hazardsscreen.dart';
 import 'reports/reportscreen.dart';
 import 'settings/settings.dart';
@@ -10,14 +12,14 @@ import 'settings/settings.dart';
 * TODO: if user selects Prefer not to say or no, navigate to ventilation issue screen
 * */
 
-class WaterLeaksScreen extends StatefulWidget {
-  const WaterLeaksScreen({super.key});
+class VentilationIssueScreen extends StatefulWidget {
+  const VentilationIssueScreen({super.key});
 
   @override
-  State<WaterLeaksScreen> createState() => _WaterLeaksScreenState();
+  State<VentilationIssueScreen> createState() => _VentilationIssueScreenState();
 }
 
-class _WaterLeaksScreenState extends State<WaterLeaksScreen> {
+class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
   String? _disabilityStatus;
   int? _numberOfResidentsWithDisability;
   final TextEditingController _numberController = TextEditingController();
@@ -165,7 +167,7 @@ class _WaterLeaksScreenState extends State<WaterLeaksScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Water Leaks in Property',
+                                        'Ventilation Issues in Property',
                                         style: TextStyle(
                                           fontSize: titleFontSize,
                                           fontWeight: FontWeight.w600,
@@ -344,7 +346,7 @@ class _WaterLeaksScreenState extends State<WaterLeaksScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Any water leaks in the property ?',
+          'Any ventilation issues in the property ?',
           style: TextStyle(
             fontSize: bodyFontSize - 1,
             fontFamily: 'Exo2',
@@ -615,7 +617,7 @@ class _WaterLeaksScreenState extends State<WaterLeaksScreen> {
 
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const WaterLeaksDescribeProblemScreen(),
+                          builder: (context) => const VentilationIssuesDescriptionScreen(),
                         ),
                       );
 

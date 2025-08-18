@@ -93,7 +93,7 @@ class _VentilationIssuesDescriptionScreenState extends State<VentilationIssuesDe
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Text(
-                                    'Tell us more about the water leaks in your home',
+                                    'Tell us more about the ventilation issues in your home',
                                     style: TextStyle(
                                       fontSize: titleFontSize,
                                       fontWeight: FontWeight.w600,
@@ -138,7 +138,7 @@ class _VentilationIssuesDescriptionScreenState extends State<VentilationIssuesDe
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Please provide details (e.g., where the leak is, when it happens, any smells, staining, or dripping):',
+          'Please provide details',
           style: TextStyle(
             fontSize: bodyFontSize - 1,
             fontFamily: 'Exo2',
@@ -224,7 +224,7 @@ class _VentilationIssuesDescriptionScreenState extends State<VentilationIssuesDe
                 // );
               }
                   : null,
-              icon: const Icon(Icons.arrow_forward),
+             // icon: const Icon(Icons.arrow_forward),
               label: Text(
                 'Next',
                 style: TextStyle(

@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:udomustenantapp/test_code/mouldlocationscreen.dart';
 // import 'disabilityorbedboundscreen.dart';
+import 'mouldlocationscreen.dart';
+
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
 class RoomsInPropertyScreen extends StatefulWidget {
   const RoomsInPropertyScreen({super.key});
@@ -29,10 +35,9 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
         index: _selectedIndex,
         children: [
           _buildMainScreen(context),
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -148,7 +153,7 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
                                   child: Icon(
                                     Icons.house,
                                     size: isTablet ? 32 : 28,
-                                    color: Colors.pink.shade400,
+                                    color: const Color(0xFF5B6FFF),
                                   ),
                                 ),
                                 const SizedBox(width: 12),
@@ -604,12 +609,18 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
                           'numberOfPregnantResidents': _numberOfResidentsWithDisability,
                       };
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Information saved securely'),
-                          duration: const Duration(seconds: 2),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const MouldLocationScreen(),
                         ),
                       );
+
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('Information saved securely'),
+                      //     duration: const Duration(seconds: 2),
+                      //   ),
+                      // );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(

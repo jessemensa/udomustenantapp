@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'disabilityorbedboundscreen.dart';
+import 'mentalhealthscreen.dart';
+
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
 class HealthConditionOrImmuneSystemScreen extends StatefulWidget {
   const HealthConditionOrImmuneSystemScreen({super.key});
@@ -29,10 +33,9 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
         index: _selectedIndex,
         children: [
           _buildMainScreen(context),
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -604,12 +607,18 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
                           'numberOfPregnantResidents': _numberOfResidentsWithDisability,
                       };
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Information saved securely'),
-                          duration: const Duration(seconds: 2),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const MentalHealthScreen(),
                         ),
                       );
+
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('Information saved securely'),
+                      //     duration: const Duration(seconds: 2),
+                      //   ),
+                      // );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(

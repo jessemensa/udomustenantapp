@@ -714,6 +714,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
 import 'arealargerthandoorscreen.dart';
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
 
 class MouldLocationScreen extends StatefulWidget {
   const MouldLocationScreen({super.key});
@@ -745,10 +748,9 @@ class _MouldLocationScreenState extends State<MouldLocationScreen> {
         index: _selectedIndex,
         children: [
           _buildMainScreen(context), // 👈 Home is now mould location
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 // import 'movefurniturewithoutassistancescreen.dart';
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
+import 'numberoftenantscreen.dart';
+import 'movefurniturewithoutassistancescreen.dart';
 
 class PreviousDampMouldScreen extends StatefulWidget {
   const PreviousDampMouldScreen({super.key});
@@ -23,10 +28,9 @@ class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
         index: _selectedIndex,
         children: [
           _buildMainScreen(context),
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -75,14 +79,9 @@ class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
           label: 'Report',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.chat_bubble_outline),
-          activeIcon: Icon(Icons.chat_bubble),
-          label: 'Chat',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          activeIcon: Icon(Icons.person),
-          label: 'Profile',
+          icon: Icon(Icons.settings_rounded),
+          activeIcon: Icon(Icons.settings),
+          label: 'Settings',
         ),
       ],
     );
@@ -135,15 +134,39 @@ class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
                             SizedBox(height: isTablet ? 32 : 20),
 
                             // Main question
-                            Text(
-                              'Have you previously reported damp and mould issues at this property?',
-                              style: TextStyle(
-                                fontSize: titleFontSize,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                                fontFamily: 'Exo2',
-                              ),
+
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.phone_in_talk, // or whatever icon you prefer
+                                  size: isTablet ? 24 : 28,
+                                  color: const Color(0xFF5B6FFF),
+                                ),
+                                SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    'Have you previously reported damp and mould issues at this property?',
+                                    style: TextStyle(
+                                      fontSize: titleFontSize,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black87,
+                                      fontFamily: 'Exo2',
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+
+                            // Text(
+                            //   'Have you previously reported damp and mould issues at this property?',
+                            //   style: TextStyle(
+                            //     fontSize: titleFontSize,
+                            //     fontWeight: FontWeight.w600,
+                            //     color: Colors.black87,
+                            //     fontFamily: 'Exo2',
+                            //   ),
+                            // ),
 
                             SizedBox(height: isTablet ? 12 : 8),
 
@@ -304,19 +327,26 @@ class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
                   child: ElevatedButton.icon(
                     onPressed: isValid
                         ? () {
-                      // Prepare data
-                      final reportData = {
-                        'previouslyReported': _selected,
-                        if (_timeframe != null) 'timeframe': _timeframe,
-                        if (_resolution != null) 'resolution': _resolution,
-                      };
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Report data: ${reportData.toString()}'),
-                          duration: const Duration(seconds: 2),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const MoveFurnitureWithoutAssistanceScreen(),
                         ),
                       );
+
+                      // Prepare data
+                      // final reportData = {
+                      //   'previouslyReported': _selected,
+                      //   if (_timeframe != null) 'timeframe': _timeframe,
+                      //   if (_resolution != null) 'resolution': _resolution,
+                      // };
+                      //
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text('Report data: ${reportData.toString()}'),
+                      //     duration: const Duration(seconds: 2),
+                      //   ),
+                      // );
 
                       // Navigator.of(context).push(
                       //   MaterialPageRoute(
@@ -353,42 +383,43 @@ class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             fontSize: 24,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         const Text(
+  //           'Coming Soon',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   bool _isValidSelection() {
     if (_selected == null) return false;
 
     // If "Yes" is selected, require additional fields
-    if (_selected!.startsWith('Yes')) {
-      return _timeframe != null && _resolution != null;
-    }
+
+    // if (_selected!.startsWith('Yes')) {
+    //   return _timeframe != null && _resolution != null;
+    // }
 
     return true;
   }

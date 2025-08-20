@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 // import 'ventilationissuescreen.dart';
 
+import 'hazards/hazardsscreen.dart';
+import 'reports/reportscreen.dart';
+import 'settings/settings.dart';
+
 class VentilationIssuesDescriptionScreen extends StatefulWidget {
   const VentilationIssuesDescriptionScreen({super.key});
 
@@ -34,10 +38,9 @@ class _VentilationIssuesDescriptionScreenState extends State<VentilationIssuesDe
         index: _selectedIndex,
         children: [
           _buildMainScreen(context), // Home content
-          _buildPlaceholderScreen('Hazard', Icons.report),
-          _buildPlaceholderScreen('Report', Icons.summarize),
-          _buildPlaceholderScreen('Chat', Icons.chat_bubble),
-          _buildPlaceholderScreen('Profile', Icons.person),
+          HazardsScreen(),
+          ReportScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
@@ -81,13 +84,13 @@ class _VentilationIssuesDescriptionScreenState extends State<VentilationIssuesDe
                                 Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.pink.shade50,
+                                    color: const Color(0xFF5B6FFF).withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(
                                     Icons.description_outlined,
                                     size: isTablet ? 32 : 38,
-                                    color: Colors.pink.shade400,
+                                    color: const Color(0xFF5B6FFF),
                                   ),
                                 ),
                                 const SizedBox(width: 12),
@@ -311,20 +314,20 @@ class _VentilationIssuesDescriptionScreenState extends State<VentilationIssuesDe
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(title, style: const TextStyle(fontSize: 24, fontFamily: 'Exo2', color: Colors.grey)),
-          const SizedBox(height: 8),
-          const Text('Coming Soon', style: TextStyle(fontSize: 16, fontFamily: 'Exo2', color: Colors.grey)),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(title, style: const TextStyle(fontSize: 24, fontFamily: 'Exo2', color: Colors.grey)),
+  //         const SizedBox(height: 8),
+  //         const Text('Coming Soon', style: TextStyle(fontSize: 16, fontFamily: 'Exo2', color: Colors.grey)),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _showBackDialog(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;

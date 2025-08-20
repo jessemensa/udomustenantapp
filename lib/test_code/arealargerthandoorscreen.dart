@@ -14,8 +14,8 @@ class AreaLargerThanDoorScreen extends StatefulWidget {
 }
 
 class _AreaLargerThanDoorScreenState extends State<AreaLargerThanDoorScreen> {
-  String? _disabilityStatus;
-  int? _numberOfResidentsWithDisability;
+  String? _mouldCoverStatus;
+  int? _numberOfPlacesAffected;
   final TextEditingController _numberController = TextEditingController();
   int _selectedIndex = 0;
   bool _showAdditionalInfo = false;
@@ -199,7 +199,7 @@ class _AreaLargerThanDoorScreenState extends State<AreaLargerThanDoorScreen> {
                             ],
 
                             // Context message
-                            if (_disabilityStatus != null)
+                            if (_mouldCoverStatus != null)
                               _buildContextMessage(bodyFontSize, isTablet),
                           ],
                         ),
@@ -368,7 +368,7 @@ class _AreaLargerThanDoorScreenState extends State<AreaLargerThanDoorScreen> {
               color: Colors.black54,
             ),
           ),
-          value: _disabilityStatus,
+          value: _mouldCoverStatus,
           items: [
             'Yes',
             'No',
@@ -386,10 +386,10 @@ class _AreaLargerThanDoorScreenState extends State<AreaLargerThanDoorScreen> {
           )).toList(),
           onChanged: (value) {
             setState(() {
-              _disabilityStatus = value;
+              _mouldCoverStatus = value;
               _showAdditionalInfo = value == 'Yes';
               if (!_showAdditionalInfo) {
-                _numberOfResidentsWithDisability = null;
+                _numberOfPlacesAffected = null;
                 _numberController.clear();
               }
             });
@@ -423,14 +423,14 @@ class _AreaLargerThanDoorScreenState extends State<AreaLargerThanDoorScreen> {
             // Quick select buttons for 1-2
             ...List.generate(2, (index) {
               final number = index + 1;
-              final isSelected = _numberOfResidentsWithDisability == number;
+              final isSelected = _numberOfPlacesAffected == number;
 
               return Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: OutlinedButton(
                   onPressed: () {
                     setState(() {
-                      _numberOfResidentsWithDisability = number;
+                      _numberOfPlacesAffected = number;
                       _numberController.text = number.toString();
                     });
                   },
@@ -503,7 +503,7 @@ class _AreaLargerThanDoorScreenState extends State<AreaLargerThanDoorScreen> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _numberOfResidentsWithDisability = int.tryParse(value);
+                    _numberOfPlacesAffected = int.tryParse(value);
                   });
                 },
               ),
@@ -520,11 +520,11 @@ class _AreaLargerThanDoorScreenState extends State<AreaLargerThanDoorScreen> {
     // Color color;
     String message;
 
-    if (_disabilityStatus == 'Yes') {
+    if (_mouldCoverStatus == 'Yes') {
       icon = Icons.priority_high;
       // color = Colors.red;
       message = 'Your case will be given high priority. We\'ll ensure all work is carried out safely with appropriate precautions for pregnant residents.';
-    } else if (_disabilityStatus == 'No') {
+    } else if (_mouldCoverStatus == 'No') {
       icon = Icons.check_circle_outline;
       // color = Colors.green;
       message = 'Thank you for the information. We\'ll proceed with standard assessment procedures.';
@@ -568,8 +568,8 @@ class _AreaLargerThanDoorScreenState extends State<AreaLargerThanDoorScreen> {
 
   Widget _buildBottomSection(BuildContext context, double buttonHeight,
       double bodyFontSize, bool isTablet) {
-    final isValid = _disabilityStatus != null &&
-        (!_showAdditionalInfo || _numberOfResidentsWithDisability != null);
+    final isValid = _mouldCoverStatus != null &&
+        (!_showAdditionalInfo || _numberOfPlacesAffected != null);
 
     return Column(
       children: [

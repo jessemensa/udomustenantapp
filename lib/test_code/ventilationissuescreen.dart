@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:udomustenantapp/test_code/waterleakdescriptionscreen.dart';
-// import 'disabilityorbedboundscreen.dart';
 
 import 'ventilationissuedescription.dart';
-
 import 'hazards/hazardsscreen.dart';
 import 'reports/reportscreen.dart';
 import 'settings/settings.dart';
@@ -20,8 +17,8 @@ class VentilationIssueScreen extends StatefulWidget {
 }
 
 class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
-  String? _disabilityStatus;
-  int? _numberOfResidentsWithDisability;
+  String? _ventilationIssuesStatus;
+  // int? _numberOfResidentsWithDisability;
   final TextEditingController _numberController = TextEditingController();
   int _selectedIndex = 0;
   bool _showAdditionalInfo = false;
@@ -104,27 +101,17 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
+          // final height = constraints.maxHeight;
           final isTablet = width > 600;
-          final isDesktop = width > 840;
-          final isLandscape = width > height;
+          // final isDesktop = width > 840;
+          // final isLandscape = width > height;
 
           // Adaptive sizing
-          final double horizontalPadding = isDesktop
-              ? 48
-              : (isTablet ? 32 : 20);
-          final double maxContentWidth = isDesktop
-              ? 600
-              : (isTablet ? 500 : double.infinity);
-          final double titleFontSize = isDesktop
-              ? 26
-              : (isTablet ? 22 : 19);
-          final double bodyFontSize = isDesktop
-              ? 18
-              : (isTablet ? 17 : 16);
-          final double buttonHeight = isDesktop
-              ? 64
-              : (isTablet ? 56 : 48);
+          final double horizontalPadding = isTablet ? 32 : 20;
+          final double maxContentWidth = isTablet ? 500 : double.infinity;
+          final double titleFontSize = isTablet ? 22 : 19;
+          final double bodyFontSize = isTablet ? 17 : 16;
+          final double buttonHeight = isTablet ? 56 : 48;
 
           return Center(
             child: ConstrainedBox(
@@ -135,7 +122,7 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Custom Header
-                    _buildHeader(context, isTablet, isDesktop),
+                    _buildHeader(context, isTablet),
 
                     // Main content with scroll
                     Expanded(
@@ -152,13 +139,13 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
                                 Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.pink.shade50,
+                                    color: const Color(0xFF5B6FFF).withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(
                                     Icons.water_damage,
                                     size: isTablet ? 32 : 28,
-                                    color: Colors.pink.shade400,
+                                    color: const Color(0xFF5B6FFF),
                                   ),
                                 ),
                                 const SizedBox(width: 12),
@@ -215,7 +202,7 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
                             ],
 
                             // Context message
-                            if (_disabilityStatus != null)
+                            if (_ventilationIssuesStatus != null)
                               _buildContextMessage(bodyFontSize, isTablet),
                           ],
                         ),
@@ -234,7 +221,7 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, bool isTablet, bool isDesktop) {
+  Widget _buildHeader(BuildContext context, bool isTablet) {
     return Padding(
       padding: EdgeInsets.only(
         top: isTablet ? 24 : 16,
@@ -248,7 +235,7 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
             icon: Icon(
               Icons.arrow_back,
               color: Colors.black87,
-              size: isDesktop ? 28 : (isTablet ? 26 : 24),
+              size: isTablet ? 26 : 24,
             ),
             style: IconButton.styleFrom(
               backgroundColor: Colors.grey.shade100,
@@ -384,7 +371,7 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
               color: Colors.black54,
             ),
           ),
-          value: _disabilityStatus,
+          value: _ventilationIssuesStatus,
           items: [
             'Yes',
             'No',
@@ -402,12 +389,12 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
           )).toList(),
           onChanged: (value) {
             setState(() {
-              _disabilityStatus = value;
+              _ventilationIssuesStatus = value;
               _showAdditionalInfo = value == 'Yes';
-              if (!_showAdditionalInfo) {
-                _numberOfResidentsWithDisability = null;
-                _numberController.clear();
-              }
+              // if (!_showAdditionalInfo) {
+              //   _numberOfResidentsWithDisability = null;
+              //   _numberController.clear();
+              // }
             });
           },
           icon: Icon(
@@ -533,20 +520,20 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
 
   Widget _buildContextMessage(double bodyFontSize, bool isTablet) {
     IconData icon;
-    Color color;
+    // Color color;
     String message;
 
-    if (_disabilityStatus == 'Yes') {
+    if (_ventilationIssuesStatus == 'Yes') {
       icon = Icons.priority_high;
-      color = Colors.red;
+      // color = Colors.red;
       message = 'Your case will be given high priority. We\'ll ensure all work is carried out safely with appropriate precautions for pregnant residents.';
-    } else if (_disabilityStatus == 'No') {
+    } else if (_ventilationIssuesStatus == 'No') {
       icon = Icons.check_circle_outline;
-      color = Colors.green;
+      // color = Colors.green;
       message = 'Thank you for the information. We\'ll proceed with standard assessment procedures.';
     } else {
       icon = Icons.privacy_tip_outlined;
-      color = Colors.grey;
+      // color = Colors.grey;
       message = 'Your privacy is respected. We\'ll proceed with our standard safety protocols.';
     }
 
@@ -584,8 +571,9 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
 
   Widget _buildBottomSection(BuildContext context, double buttonHeight,
       double bodyFontSize, bool isTablet) {
-    final isValid = _disabilityStatus != null &&
-        (!_showAdditionalInfo || _numberOfResidentsWithDisability != null);
+    final isValid = _ventilationIssuesStatus != null;
+    // &&
+    //     (!_showAdditionalInfo || _numberOfResidentsWithDisability != null);
 
     return Column(
       children: [
@@ -607,12 +595,12 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
                   child: ElevatedButton.icon(
                     onPressed: isValid
                         ? () {
-                      // Prepare data
-                      final pregnancyData = {
-                        'pregnancyStatus': _disabilityStatus,
-                        if (_numberOfResidentsWithDisability != null)
-                          'numberOfPregnantResidents': _numberOfResidentsWithDisability,
-                      };
+                      // // Prepare data
+                      // final pregnancyData = {
+                      //   'pregnancyStatus': _ventilationIssuesStatus,
+                      //   if (_numberOfResidentsWithDisability != null)
+                      //     'numberOfPregnantResidents': _numberOfResidentsWithDisability,
+                      // };
 
 
                       Navigator.of(context).push(
@@ -664,34 +652,34 @@ class _VentilationIssueScreenState extends State<VentilationIssueScreen> {
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             fontSize: 24,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         const Text(
+  //           'Coming Soon',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _showBackDialog(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width > 600;

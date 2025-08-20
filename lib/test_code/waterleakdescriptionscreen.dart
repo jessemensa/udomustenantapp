@@ -84,13 +84,13 @@ class _WaterLeaksDescribeProblemScreenState extends State<WaterLeaksDescribeProb
                                 Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.pink.shade50,
+                                    color: const Color(0xFF5B6FFF).withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(
                                     Icons.description_outlined,
                                     size: isTablet ? 32 : 38,
-                                    color: Colors.pink.shade400,
+                                    color: const Color(0xFF5B6FFF),
                                   ),
                                 ),
                                 const SizedBox(width: 12),
@@ -268,9 +268,9 @@ class _WaterLeaksDescribeProblemScreenState extends State<WaterLeaksDescribeProb
           // Skip at far right
           TextButton(
             onPressed: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(builder: (_) => const VentilationIssuesScreen()),
-              // );
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const VentilationIssueScreen()),
+              );
             },
             style: TextButton.styleFrom(
               padding: EdgeInsets.symmetric(horizontal: isTablet ? 16 : 12, vertical: 8),
@@ -314,20 +314,20 @@ class _WaterLeaksDescribeProblemScreenState extends State<WaterLeaksDescribeProb
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(title, style: const TextStyle(fontSize: 24, fontFamily: 'Exo2', color: Colors.grey)),
-          const SizedBox(height: 8),
-          const Text('Coming Soon', style: TextStyle(fontSize: 16, fontFamily: 'Exo2', color: Colors.grey)),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(title, style: const TextStyle(fontSize: 24, fontFamily: 'Exo2', color: Colors.grey)),
+  //         const SizedBox(height: 8),
+  //         const Text('Coming Soon', style: TextStyle(fontSize: 16, fontFamily: 'Exo2', color: Colors.grey)),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _showBackDialog(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;

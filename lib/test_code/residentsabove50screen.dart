@@ -14,7 +14,7 @@ class ResidentsAbove50Screen extends StatefulWidget {
 
 class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
   String? _selectedOption;
-  int? _numberOfResidents;
+  int? _residentsabove50;
   final TextEditingController _numberController = TextEditingController();
   int _selectedIndex = 0;
   bool _showNumberInput = false;
@@ -97,10 +97,10 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
+         // final height = constraints.maxHeight;
           final isTablet = width > 600;
           final isDesktop = width > 840;
-          final isLandscape = width > height;
+          // final isLandscape = width > height;
 
           // Adaptive sizing
           final double horizontalPadding = isDesktop
@@ -128,7 +128,7 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Custom Header
-                    _buildHeader(context, isTablet, isDesktop),
+                    _buildHeader(context, isTablet),
 
                     // Main content with scroll
                     Expanded(
@@ -212,7 +212,7 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, bool isTablet, bool isDesktop) {
+  Widget _buildHeader(BuildContext context, bool isTablet) {
     return Padding(
       padding: EdgeInsets.only(
         top: isTablet ? 24 : 16,
@@ -226,7 +226,7 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
             icon: Icon(
               Icons.arrow_back,
               color: Colors.black87,
-              size: isDesktop ? 28 : (isTablet ? 26 : 24),
+              size: isTablet ? 26 : 24,
             ),
             style: IconButton.styleFrom(
               backgroundColor: Colors.grey.shade100,
@@ -348,7 +348,7 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
               _selectedOption = value;
               _showNumberInput = value?.startsWith('Yes') ?? false;
               if (!_showNumberInput) {
-                _numberOfResidents = null;
+                _residentsabove50 = null;
                 _numberController.clear();
               }
             });
@@ -382,14 +382,14 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
             // Quick select buttons
             ...List.generate(4, (index) {
               final number = index + 1;
-              final isSelected = _numberOfResidents == number;
+              final isSelected = _residentsabove50 == number;
 
               return Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: OutlinedButton(
                   onPressed: () {
                     setState(() {
-                      _numberOfResidents = number;
+                      _residentsabove50 = number;
                       _numberController.text = number.toString();
                     });
                   },
@@ -401,7 +401,7 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
                       width: isSelected ? 2 : 1,
                     ),
                     backgroundColor: isSelected
-                        ? const Color(0xFF5B6FFF).withOpacity(0.1)
+                        ? const Color(0xFF5B6FFF).withValues(alpha: 0.1)
                         : Colors.white,
                     padding: EdgeInsets.symmetric(
                       horizontal: isTablet ? 20 : 16,
@@ -462,7 +462,7 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _numberOfResidents = int.tryParse(value);
+                    _residentsabove50 = int.tryParse(value);
                   });
                 },
               ),
@@ -475,24 +475,24 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
 
   Widget _buildContextMessage(double bodyFontSize, bool isTablet) {
     IconData icon;
-    Color color;
+    // Color color;
     String message;
 
     if (_selectedOption?.startsWith('Yes') ?? false) {
       icon = Icons.priority_high;
-      color = Colors.orange;
+      // color = Colors.orange;
       message = 'We\'ll prioritize your case as older residents may be more vulnerable to health impacts from damp and mould.';
     } else if (_selectedOption?.startsWith('No') ?? false) {
       icon = Icons.check_circle_outline;
-      color = Colors.green;
+      // color = Colors.green;
       message = 'Thank you for the information. We\'ll proceed with standard assessment procedures.';
     } else if (_selectedOption?.contains('Not sure') ?? false) {
       icon = Icons.help_outline;
-      color = Colors.blue;
+      // color = Colors.blue;
       message = 'That\'s okay. We\'ll gather more information during our assessment if needed.';
     } else {
       icon = Icons.privacy_tip_outlined;
-      color = Colors.grey;
+      // color = Colors.grey;
       message = 'Your privacy is respected. We\'ll proceed with our standard assessment process.';
     }
 
@@ -531,7 +531,7 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
   Widget _buildBottomSection(BuildContext context, double buttonHeight,
       double bodyFontSize, bool isTablet) {
     final isValid = _selectedOption != null &&
-        (!_showNumberInput || _numberOfResidents != null);
+        (!_showNumberInput || _residentsabove50 != null);
 
     return Column(
       children: [
@@ -553,11 +553,11 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
                     onPressed: isValid
                         ? () {
                       // Prepare data
-                      final demographicData = {
-                        'hasResidents50Plus': _selectedOption,
-                        if (_numberOfResidents != null)
-                          'numberOfResidents50Plus': _numberOfResidents,
-                      };
+                      // final demographicData = {
+                      //   'hasResidents50Plus': _selectedOption,
+                      //   if (_residentsabove50 != null)
+                      //     'numberOfResidents50Plus': _residentsabove50,
+                      // };
 
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -609,34 +609,34 @@ class _ResidentsAbove50ScreenState extends State<ResidentsAbove50Screen> {
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             fontSize: 24,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         const Text(
+  //           'Coming Soon',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _showBackDialog(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width > 600;

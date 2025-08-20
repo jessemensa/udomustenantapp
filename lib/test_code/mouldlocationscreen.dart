@@ -712,7 +712,7 @@ import 'package:flutter/material.dart';
 
 
 
-import 'package:flutter/material.dart';
+
 import 'arealargerthandoorscreen.dart';
 import 'hazards/hazardsscreen.dart';
 import 'reports/reportscreen.dart';
@@ -735,7 +735,7 @@ class _MouldLocationScreenState extends State<MouldLocationScreen> {
     'Kitchen',
   ];
 
-  List<String> _selected = [];
+  final List<String>  _selected = [];
   int _selectedIndex = 0; // 👈 Start on Home
 
   bool _isNavigating = false;
@@ -762,15 +762,15 @@ class _MouldLocationScreenState extends State<MouldLocationScreen> {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
+         // final height = constraints.maxHeight;
           final isTablet = width > 600;
-          final isDesktop = width > 840;
+         // final isDesktop = width > 840;
 
-          final double horizontalPadding = isDesktop ? 48 : (isTablet ? 32 : 20);
-          final double maxContentWidth = isDesktop ? 600 : (isTablet ? 500 : double.infinity);
-          final double titleFontSize = isDesktop ? 26 : (isTablet ? 22 : 19);
-          final double bodyFontSize = isDesktop ? 18 : (isTablet ? 17 : 16);
-          final double buttonHeight = isDesktop ? 64 : (isTablet ? 56 : 48);
+          final double horizontalPadding = isTablet ? 32 : 20;
+          final double maxContentWidth = isTablet ? 500 : double.infinity;
+          final double titleFontSize = isTablet ? 22 : 19;
+          final double bodyFontSize = isTablet ? 17 : 16;
+          final double buttonHeight = isTablet ? 56 : 48;
 
           return Center(
             child: ConstrainedBox(
@@ -780,7 +780,7 @@ class _MouldLocationScreenState extends State<MouldLocationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _buildHeader(context, isTablet, isDesktop),
+                    _buildHeader(context, isTablet),
 
                     Expanded(
                       child: SingleChildScrollView(
@@ -794,13 +794,13 @@ class _MouldLocationScreenState extends State<MouldLocationScreen> {
                                 Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.purple.shade50,
+                                    color: const Color(0xFF5B6FFF).withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(
                                     Icons.location_on,
                                     size: isTablet ? 32 : 28,
-                                    color: Colors.purple.shade400,
+                                    color: const Color(0xFF5B6FFF),
                                   ),
                                 ),
                                 const SizedBox(width: 12),
@@ -1009,7 +1009,7 @@ class _MouldLocationScreenState extends State<MouldLocationScreen> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, bool isTablet, bool isDesktop) {
+  Widget _buildHeader(BuildContext context, bool isTablet) {
     return Padding(
       padding: EdgeInsets.only(top: isTablet ? 24 : 16, bottom: isTablet ? 16 : 8),
       child: Row(
@@ -1047,20 +1047,20 @@ class _MouldLocationScreenState extends State<MouldLocationScreen> {
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(title, style: const TextStyle(fontSize: 24, fontFamily: 'Exo2', color: Colors.grey)),
-          const SizedBox(height: 8),
-          const Text('Coming Soon', style: TextStyle(fontSize: 16, fontFamily: 'Exo2', color: Colors.grey)),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(title, style: const TextStyle(fontSize: 24, fontFamily: 'Exo2', color: Colors.grey)),
+  //         const SizedBox(height: 8),
+  //         const Text('Coming Soon', style: TextStyle(fontSize: 16, fontFamily: 'Exo2', color: Colors.grey)),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _showBackDialog(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width > 600;

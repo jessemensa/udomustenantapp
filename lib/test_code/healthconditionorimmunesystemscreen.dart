@@ -14,7 +14,7 @@ class HealthConditionOrImmuneSystemScreen extends StatefulWidget {
 
 class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrImmuneSystemScreen> {
   String? _disabilityStatus;
-  int? _numberOfResidentsWithHealthConditionOrImmunesystemIssues;
+  int? _numberOfResidentsWithHealthConditionOrImmuneSystemIssues;
   final TextEditingController _numberController = TextEditingController();
   int _selectedIndex = 0;
   bool _showAdditionalInfo = false;
@@ -398,7 +398,7 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
               _disabilityStatus = value;
               _showAdditionalInfo = value == 'Yes';
               if (!_showAdditionalInfo) {
-                _numberOfResidentsWithHealthConditionOrImmunesystemIssues = null;
+                _numberOfResidentsWithHealthConditionOrImmuneSystemIssues = null;
                 _numberController.clear();
               }
             });
@@ -432,14 +432,14 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
             // Quick select buttons for 1-2
             ...List.generate(2, (index) {
               final number = index + 1;
-              final isSelected = _numberOfResidentsWithHealthConditionOrImmunesystemIssues == number;
+              final isSelected = _numberOfResidentsWithHealthConditionOrImmuneSystemIssues == number;
 
               return Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: OutlinedButton(
                   onPressed: () {
                     setState(() {
-                      _numberOfResidentsWithHealthConditionOrImmunesystemIssues = number;
+                      _numberOfResidentsWithHealthConditionOrImmuneSystemIssues = number;
                       _numberController.text = number.toString();
                     });
                   },
@@ -512,7 +512,7 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _numberOfResidentsWithHealthConditionOrImmunesystemIssues = int.tryParse(value);
+                    _numberOfResidentsWithHealthConditionOrImmuneSystemIssues = int.tryParse(value);
                   });
                 },
               ),
@@ -578,7 +578,7 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
   Widget _buildBottomSection(BuildContext context, double buttonHeight,
       double bodyFontSize, bool isTablet) {
     final isValid = _disabilityStatus != null &&
-        (!_showAdditionalInfo || _numberOfResidentsWithHealthConditionOrImmunesystemIssues != null);
+        (!_showAdditionalInfo || _numberOfResidentsWithHealthConditionOrImmuneSystemIssues != null);
 
     return Column(
       children: [

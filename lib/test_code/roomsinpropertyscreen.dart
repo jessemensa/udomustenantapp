@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:udomustenantapp/test_code/mouldlocationscreen.dart';
 // import 'disabilityorbedboundscreen.dart';
-import 'mouldlocationscreen.dart';
 
 import 'hazards/hazardsscreen.dart';
 import 'reports/reportscreen.dart';
@@ -16,7 +15,7 @@ class RoomsInPropertyScreen extends StatefulWidget {
 
 class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
   String? _disabilityStatus;
-  int? _numberOfResidentsWithDisability;
+  int? _numberOfRoomsInProperty;
   final TextEditingController _numberController = TextEditingController();
   int _selectedIndex = 0;
   bool _showAdditionalInfo = false;
@@ -99,10 +98,10 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
+          // final height = constraints.maxHeight;
           final isTablet = width > 600;
           final isDesktop = width > 840;
-          final isLandscape = width > height;
+          // final isLandscape = width > height;
 
           // Adaptive sizing
           final double horizontalPadding = isDesktop
@@ -147,7 +146,7 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
                                 Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.pink.shade50,
+                                    color: const Color(0xFF5B6FFF).withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(
@@ -400,7 +399,7 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
               _disabilityStatus = value;
               _showAdditionalInfo = value == 'Yes';
               if (!_showAdditionalInfo) {
-                _numberOfResidentsWithDisability = null;
+                _numberOfRoomsInProperty = null;
                 _numberController.clear();
               }
             });
@@ -434,14 +433,14 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
             // Quick select buttons for 1-2
             ...List.generate(2, (index) {
               final number = index + 1;
-              final isSelected = _numberOfResidentsWithDisability == number;
+              final isSelected = _numberOfRoomsInProperty == number;
 
               return Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: OutlinedButton(
                   onPressed: () {
                     setState(() {
-                      _numberOfResidentsWithDisability = number;
+                      _numberOfRoomsInProperty = number;
                       _numberController.text = number.toString();
                     });
                   },
@@ -453,7 +452,7 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
                       width: isSelected ? 2 : 1,
                     ),
                     backgroundColor: isSelected
-                        ? const Color(0xFF5B6FFF).withOpacity(0.1)
+                        ? const Color(0xFF5B6FFF).withValues(alpha: 0.1)
                         : Colors.white,
                     padding: EdgeInsets.symmetric(
                       horizontal: isTablet ? 24 : 20,
@@ -514,7 +513,7 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _numberOfResidentsWithDisability = int.tryParse(value);
+                    _numberOfRoomsInProperty = int.tryParse(value);
                   });
                 },
               ),
@@ -528,20 +527,20 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
 
   Widget _buildContextMessage(double bodyFontSize, bool isTablet) {
     IconData icon;
-    Color color;
+    // Color color;
     String message;
 
     if (_disabilityStatus == 'Yes') {
       icon = Icons.priority_high;
-      color = Colors.red;
+     //  color = Colors.red;
       message = 'Your case will be given high priority. We\'ll ensure all work is carried out safely with appropriate precautions for pregnant residents.';
     } else if (_disabilityStatus == 'No') {
       icon = Icons.check_circle_outline;
-      color = Colors.green;
+     //  color = Colors.green;
       message = 'Thank you for the information. We\'ll proceed with standard assessment procedures.';
     } else {
       icon = Icons.privacy_tip_outlined;
-      color = Colors.grey;
+     //  color = Colors.grey;
       message = 'Your privacy is respected. We\'ll proceed with our standard safety protocols.';
     }
 
@@ -580,7 +579,7 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
   Widget _buildBottomSection(BuildContext context, double buttonHeight,
       double bodyFontSize, bool isTablet) {
     final isValid = _disabilityStatus != null &&
-        (!_showAdditionalInfo || _numberOfResidentsWithDisability != null);
+        (!_showAdditionalInfo || _numberOfRoomsInProperty != null);
 
     return Column(
       children: [
@@ -603,11 +602,11 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
                     onPressed: isValid
                         ? () {
                       // Prepare data
-                      final pregnancyData = {
-                        'pregnancyStatus': _disabilityStatus,
-                        if (_numberOfResidentsWithDisability != null)
-                          'numberOfPregnantResidents': _numberOfResidentsWithDisability,
-                      };
+                      // final pregnancyData = {
+                      //   'pregnancyStatus': _disabilityStatus,
+                      //   if (_numberOfRoomsInProperty != null)
+                      //     'numberOfPregnantResidents': _numberOfRoomsInProperty,
+                      // };
 
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -658,34 +657,34 @@ class _RoomsInPropertyScreenState extends State<RoomsInPropertyScreen> {
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             fontSize: 24,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         const Text(
+  //           'Coming Soon',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _showBackDialog(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width > 600;

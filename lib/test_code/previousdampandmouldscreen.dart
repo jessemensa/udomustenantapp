@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'movefurniturewithoutassistancescreen.dart';
 import 'hazards/hazardsscreen.dart';
 import 'reports/reportscreen.dart';
 import 'settings/settings.dart';
@@ -15,10 +14,10 @@ class PreviousDampMouldScreen extends StatefulWidget {
 
 class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
   String? _selected;
-  String? _timeframe;
-  String? _resolution;
+  // String? _timeframe;
+  // String? _resolution;
   int _selectedIndex = 0;
-  bool _showAdditionalQuestions = false;
+  // bool _showAdditionalQuestions = false;
 
   @override
   Widget build(BuildContext context) {
@@ -92,10 +91,10 @@ class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
+          // final height = constraints.maxHeight;
           final isTablet = width > 600;
           final isDesktop = width > 840;
-          final isLandscape = width > height;
+          // final isLandscape = width > height;
 
           // Adaptive sizing
           final double horizontalPadding = isDesktop
@@ -131,22 +130,18 @@ class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            SizedBox(height: isTablet ? 32 : 20),
-
-                            // Main question
-
+                            SizedBox(height: isTablet ? 40 : 24),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Icon(
                                   Icons.phone_in_talk, // or whatever icon you prefer
                                   size: isTablet ? 24 : 28,
                                   color: const Color(0xFF5B6FFF),
                                 ),
-                                SizedBox(width: 8),
+                                SizedBox(width: isTablet ? 20 : 15),
                                 Expanded(
                                   child: Text(
-                                    'Have you previously reported damp and mould issues at this property?',
+                                    'Have you previously reported this issues at this property?',
                                     style: TextStyle(
                                       fontSize: titleFontSize,
                                       fontWeight: FontWeight.w600,
@@ -157,17 +152,6 @@ class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
                                 ),
                               ],
                             ),
-
-                            // Text(
-                            //   'Have you previously reported damp and mould issues at this property?',
-                            //   style: TextStyle(
-                            //     fontSize: titleFontSize,
-                            //     fontWeight: FontWeight.w600,
-                            //     color: Colors.black87,
-                            //     fontFamily: 'Exo2',
-                            //   ),
-                            // ),
-
                             SizedBox(height: isTablet ? 12 : 8),
 
                             // Helper text
@@ -289,11 +273,11 @@ class _PreviousDampMouldScreenState extends State<PreviousDampMouldScreen> {
           onChanged: (value) {
             setState(() {
               _selected = value;
-              _showAdditionalQuestions = value?.startsWith('Yes') ?? false;
-              if (!_showAdditionalQuestions) {
-                _timeframe = null;
-                _resolution = null;
-              }
+              // _showAdditionalQuestions = value?.startsWith('Yes') ?? false;
+              // if (!_showAdditionalQuestions) {
+              //   _timeframe = null;
+              //   _resolution = null;
+              // }
             });
           },
           icon: Icon(

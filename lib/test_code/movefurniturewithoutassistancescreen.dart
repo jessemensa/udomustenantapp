@@ -509,25 +509,25 @@ class _MoveFurnitureWithoutAssistanceScreenState
 
   Widget _buildInfoBox(double bodyFontSize, bool isTablet) {
     IconData icon;
-    Color color;
+    // Color color;
     String message;
 
     if (_mobilityLevel?.contains('No') ?? false) {
       icon = Icons.support;
-      color = Colors.green;
+      // color = Colors.green;
       message = 'We\'ll ensure appropriate support is available during our visit. Your safety and comfort are our priority.';
     } else if (_mobilityLevel?.contains('Sometimes') ?? false ||
-        _mobilityLevel!.contains('light') ?? false) {
+        _mobilityLevel!.contains('light')) {
       icon = Icons.info_outline;
-      color = Colors.blue;
+     // color = Colors.blue;
       message = 'We\'ll make note of your needs and provide assistance as required during the inspection.';
     } else if (_mobilityLevel?.contains('Prefer not') ?? false) {
       icon = Icons.privacy_tip_outlined;
-      color = Colors.grey;
+      // color = Colors.grey;
       message = 'Your privacy is respected. We\'ll proceed with standard procedures during our visit.';
     } else {
       icon = Icons.check_circle_outline;
-      color = Colors.green;
+     // color = Colors.green;
       message = 'Thank you for letting us know. This helps us plan our visit efficiently.';
     }
 
@@ -535,7 +535,7 @@ class _MoveFurnitureWithoutAssistanceScreenState
       margin: EdgeInsets.only(top: isTablet ? 24 : 16),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        //color: Colors.blue,
+
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.blue),
       ),

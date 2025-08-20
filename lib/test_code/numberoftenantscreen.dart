@@ -143,11 +143,11 @@ class _NumberOfTenantsScreenState extends State<NumberOfTenantsScreen> {
                             Row(
                               children: [
                                 Icon(
-                                  Icons.phone_in_talk, // or whatever icon you prefer
+                                  Icons.people, // or whatever icon you prefer
                                   size: isTablet ? 24 : 28,
                                   color: const Color(0xFF5B6FFF),
                                 ),
-                                SizedBox(width: isTablet ? 20 : 10),
+                                SizedBox(width: isTablet ? 20 : 15),
                                 Expanded(
                                  child: Text(
                                    'How many tenants live in the property?',

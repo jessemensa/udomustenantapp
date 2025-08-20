@@ -140,15 +140,36 @@ class _NumberOfTenantsScreenState extends State<NumberOfTenantsScreen> {
                             SizedBox(height: isTablet ? 40 : 24),
 
                             // Question title
-                            Text(
-                              'How many tenants live in the property?',
-                              style: TextStyle(
-                                fontSize: titleFontSize,
-                                fontFamily: 'Exo2',
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                              ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.phone_in_talk, // or whatever icon you prefer
+                                  size: isTablet ? 24 : 28,
+                                  color: const Color(0xFF5B6FFF),
+                                ),
+                                SizedBox(width: isTablet ? 20 : 10),
+                                Expanded(
+                                 child: Text(
+                                   'How many tenants live in the property?',
+                                   style: TextStyle(
+                                     fontSize: titleFontSize,
+                                     fontFamily: 'Exo2',
+                                     fontWeight: FontWeight.w600,
+                                     color: Colors.black87,
+                                   ),
+                                 ),
+                                ),
+                              ],
                             ),
+                            // Text(
+                            //   'How many tenants live in the property?',
+                            //   style: TextStyle(
+                            //     fontSize: titleFontSize,
+                            //     fontFamily: 'Exo2',
+                            //     fontWeight: FontWeight.w600,
+                            //     color: Colors.black87,
+                            //   ),
+                            // ),
 
                             SizedBox(height: isTablet ? 12 : 8),
 

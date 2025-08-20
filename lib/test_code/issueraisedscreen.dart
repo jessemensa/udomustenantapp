@@ -208,10 +208,17 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
               height: isTablet ? 56 : 48,
            child: Align(
            alignment: Alignment(-2, 0), // -1.0 is far left, 0 is center, 1.0 is far right
-             child: Icon(
-               Icons.arrow_back,
-               color: const Color.fromARGB(255, 0, 0, 0),
-               size: isTablet ? 28 : 24,
+             child:           IconButton(
+               onPressed: () => _showBackDialog(context),
+               icon: Icon(
+                 Icons.arrow_back,
+                 color: Colors.black87,
+                 size: isTablet ? 26 : 24,
+               ),
+               style: IconButton.styleFrom(
+                 backgroundColor: Colors.grey.shade100,
+                 padding: EdgeInsets.all(isTablet ? 12 : 8),
+               ),
              ),
            ),
             ),

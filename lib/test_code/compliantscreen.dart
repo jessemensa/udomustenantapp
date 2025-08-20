@@ -37,7 +37,6 @@
 
    /* METHOD THAT RETURNS A WIDGET */
    Widget _buildBottomNavigationBar() {
-
      // this checks if the device is a tablet, it is a tablet if it is greater than 600.
      // the number is then stored in the variable isTablet and used throughout the code
      final bool isTablet = MediaQuery.of(context).size.width > 600;
@@ -63,6 +62,8 @@
        unselectedFontSize: isTablet ? 14 : 12,
        // if the iconSize is tablet then
        iconSize: isTablet ? 28 : 24,
+       selectedLabelStyle: const TextStyle(fontFamily: 'Exo2'),
+       unselectedLabelStyle: const TextStyle(fontFamily: 'Exo2'),
        items: const [
          BottomNavigationBarItem(
            icon: Icon(Icons.home_outlined),
@@ -150,6 +151,7 @@
                            Text(
                              'Udomus Tenant',
                              style: TextStyle(
+                               fontFamily: 'Exo2',
                                fontSize: isTablet ? 32 : 24,
                                fontWeight: FontWeight.w600,
                                color: Colors.black87,
@@ -162,6 +164,7 @@
                            Text(
                              'Report Damp and Mould issues in your home to your property manager.',
                              style: TextStyle(
+                               fontFamily: 'Exo2',
                                fontSize: isTablet ? 18 : 16,
                                color: Colors.black54,
                              ),
@@ -175,12 +178,12 @@
                              context,
                              'Send a Complaint',
                              icon: Icons.send,
-                               onPressed: () => {
+                               onPressed: () {
                                  Navigator.of(context).push(
                                      MaterialPageRoute(
-                                         builder: (context) => IssueRaisedScreen()
+                                         builder: (context) => const IssueRaisedScreen()
                                      )
-                                 )
+                                 );
                                }
                            ),
                            SizedBox(height: isTablet ? 24 : 20),
@@ -255,6 +258,7 @@
            style: TextStyle(
              fontSize: isTablet ? 17 : 16,
              fontWeight: FontWeight.w600,
+             fontFamily: 'Exo2',
            ),
          ),
        ),

@@ -16,7 +16,7 @@ class PregnancyInformationScreen extends StatefulWidget {
 class _PregnancyInformationScreenState extends State<PregnancyInformationScreen> {
   String? _pregnancyStatus;
   int? _numberOfPregnantResidents;
-  String? _trimesterInfo;
+  //String? _trimesterInfo;
   final TextEditingController _numberController = TextEditingController();
   int _selectedIndex = 0;
   bool _showAdditionalInfo = false;
@@ -99,10 +99,10 @@ class _PregnancyInformationScreenState extends State<PregnancyInformationScreen>
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
+          // final height = constraints.maxHeight;
           final isTablet = width > 600;
           final isDesktop = width > 840;
-          final isLandscape = width > height;
+          // final isLandscape = width > height;
 
           // Adaptive sizing
           final double horizontalPadding = isDesktop
@@ -401,7 +401,7 @@ class _PregnancyInformationScreenState extends State<PregnancyInformationScreen>
               _showAdditionalInfo = value == 'Yes';
               if (!_showAdditionalInfo) {
                 _numberOfPregnantResidents = null;
-                _trimesterInfo = null;
+                // _trimesterInfo = null;
                 _numberController.clear();
               }
             });
@@ -454,7 +454,7 @@ class _PregnancyInformationScreenState extends State<PregnancyInformationScreen>
                       width: isSelected ? 2 : 1,
                     ),
                     backgroundColor: isSelected
-                        ? const Color(0xFF5B6FFF).withOpacity(0.1)
+                        ? const Color(0xFF5B6FFF).withValues(alpha: 0.1)
                         : Colors.white,
                     padding: EdgeInsets.symmetric(
                       horizontal: isTablet ? 24 : 20,
@@ -529,20 +529,20 @@ class _PregnancyInformationScreenState extends State<PregnancyInformationScreen>
 
   Widget _buildContextMessage(double bodyFontSize, bool isTablet) {
     IconData icon;
-    Color color;
+    // Color color;
     String message;
 
     if (_pregnancyStatus == 'Yes') {
       icon = Icons.priority_high;
-      color = Colors.red;
+      // color = Colors.red;
       message = 'Your case will be given high priority. We\'ll ensure all work is carried out safely with appropriate precautions for pregnant residents.';
     } else if (_pregnancyStatus == 'No') {
       icon = Icons.check_circle_outline;
-      color = Colors.green;
+      // color = Colors.green;
       message = 'Thank you for the information. We\'ll proceed with standard assessment procedures.';
     } else {
       icon = Icons.privacy_tip_outlined;
-      color = Colors.grey;
+      // color = Colors.grey;
       message = 'Your privacy is respected. We\'ll proceed with our standard safety protocols.';
     }
 
@@ -604,13 +604,13 @@ class _PregnancyInformationScreenState extends State<PregnancyInformationScreen>
                     onPressed: isValid
                         ? () {
                       // Prepare data
-                      final pregnancyData = {
-                        'pregnancyStatus': _pregnancyStatus,
-                        if (_numberOfPregnantResidents != null)
-                          'numberOfPregnantResidents': _numberOfPregnantResidents,
-                        if (_trimesterInfo != null)
-                          'trimesterInfo': _trimesterInfo,
-                      };
+                      // final pregnancyData = {
+                      //   'pregnancyStatus': _pregnancyStatus,
+                      //   if (_numberOfPregnantResidents != null)
+                      //     'numberOfPregnantResidents': _numberOfPregnantResidents,
+                      //   // if (_trimesterInfo != null)
+                      //   //   'trimesterInfo': _trimesterInfo,
+                      // };
 
 
                       Navigator.of(context).push(
@@ -662,34 +662,34 @@ class _PregnancyInformationScreenState extends State<PregnancyInformationScreen>
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             fontSize: 24,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         const Text(
+  //           'Coming Soon',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _showBackDialog(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width > 600;

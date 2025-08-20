@@ -5,6 +5,11 @@ import 'hazards/hazardsscreen.dart';
 import 'reports/reportscreen.dart';
 import 'settings/settings.dart';
 
+/*
+  TODO: Add a text for users that choose NO
+  ie. Thank you for information, we will proceed with the standard assessment procedures
+* */
+
 // Renamed to better reflect the purpose
 class VulnerableResidentsScreen extends StatefulWidget {
   const VulnerableResidentsScreen({super.key});
@@ -17,9 +22,9 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
   // Separate tracking for different vulnerable groups
   bool? _hasChildrenUnder14;
   int? _numberOfChildren;
-  bool? _hasRespiratoryConditions;
+  // bool? _hasRespiratoryConditions;
   // int? _numberOfRespiratoryResidents;
-  List<String> _respiratoryConditions = [];
+  // List<String> _respiratoryConditions = [];
 
   final TextEditingController _childrenController = TextEditingController();
   final TextEditingController _respiratoryController = TextEditingController();
@@ -105,10 +110,10 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
+         // final height = constraints.maxHeight;
           final isTablet = width > 600;
           final isDesktop = width > 840;
-          final isLandscape = width > height;
+         // final isLandscape = width > height;
 
           // Adaptive sizing
           final double horizontalPadding = isDesktop
@@ -200,7 +205,9 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
                             // _buildRespiratorySection(bodyFontSize, isTablet),
 
                             // Context message
-                            if (_hasChildrenUnder14 != null || _hasRespiratoryConditions != null)
+                            if (_hasChildrenUnder14 != null
+                                // || _hasRespiratoryConditions != null
+                            )
                               _buildContextMessage(bodyFontSize, isTablet),
                           ],
                         ),
@@ -405,7 +412,7 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
                           width: _numberOfChildren == number ? 2 : 1,
                         ),
                         backgroundColor: _numberOfChildren == number
-                            ? const Color(0xFF5B6FFF).withOpacity(0.1)
+                            ? const Color(0xFF5B6FFF).withValues(alpha: 0.1)
                             : Colors.white,
                       ),
                       child: Text(number.toString()),
@@ -444,10 +451,12 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
 
 
   Widget _buildContextMessage(double bodyFontSize, bool isTablet) {
-    final hasVulnerable = (_hasChildrenUnder14 == true) ||
-        (_hasRespiratoryConditions == true);
+    final hasVulnerable = (_hasChildrenUnder14 == true);
+        // || (_hasRespiratoryConditions == true);
 
-    if (!hasVulnerable && _hasChildrenUnder14 != null && _hasRespiratoryConditions != null) {
+    if (!hasVulnerable && _hasChildrenUnder14 != null
+        // && _hasRespiratoryConditions != null
+    ) {
       return Container(
         margin: EdgeInsets.only(top: isTablet ? 24 : 16),
         padding: const EdgeInsets.all(12),
@@ -537,15 +546,15 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
                     onPressed: isValid
                         ? () {
                       // Prepare data
-                      final vulnerableData = {
-                        'hasChildrenUnder14': _hasChildrenUnder14,
-                        if (_numberOfChildren != null)
-                          'numberOfChildren': _numberOfChildren,
-                        'hasRespiratoryConditions': _hasRespiratoryConditions,
-
-                        if (_respiratoryConditions.isNotEmpty)
-                          'conditions': _respiratoryConditions,
-                      };
+                      // final vulnerableData = {
+                      //   'hasChildrenUnder14': _hasChildrenUnder14,
+                      //   if (_numberOfChildren != null)
+                      //     'numberOfChildren': _numberOfChildren,
+                      //   'hasRespiratoryConditions': _hasRespiratoryConditions,
+                      //
+                      //   // if (_respiratoryConditions.isNotEmpty)
+                      //   //   'conditions': _respiratoryConditions,
+                      // };
 
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -597,34 +606,34 @@ class _VulnerableResidentsScreenState extends State<VulnerableResidentsScreen> {
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             fontSize: 24,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         const Text(
+  //           'Coming Soon',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _showBackDialog(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width > 600;

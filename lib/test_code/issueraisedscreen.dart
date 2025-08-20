@@ -201,14 +201,15 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
       child: Row(
         children: [
           // Back button
+          SizedBox(width: isTablet ? 8 : 4), // left spacing
           GestureDetector(
-            onTap: () => _showBackDialog(context),
-            child: Container(
+            // onTap: () => _showBackDialog(context),
+            child: SizedBox(
               width: isTablet ? 56 : 48,
               height: isTablet ? 56 : 48,
            child: Align(
-           alignment: Alignment(-2, 0), // -1.0 is far left, 0 is center, 1.0 is far right
-             child:           IconButton(
+           alignment: Alignment.center, // -1.0 is far left, 0 is center, 1.0 is far right
+             child: IconButton(
                onPressed: () => _showBackDialog(context),
                icon: Icon(
                  Icons.arrow_back,
@@ -373,7 +374,7 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
                   value: currentMonth.month,
                   underline: const SizedBox(),
                   style: TextStyle(
-                    fontSize: isDesktop ? 18 : (isTablet ? 17 : 16),
+                    fontSize: isTablet ? 17 : 16,
                     fontFamily: 'Exo2',
                     color: Colors.black87,
                   ),
@@ -399,7 +400,7 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
                   value: currentMonth.year,
                   underline: const SizedBox(),
                   style: TextStyle(
-                    fontSize: isDesktop ? 18 : (isTablet ? 17 : 16),
+                    fontSize: isTablet ? 17 : 16,
                     fontFamily: 'Exo2',
                     color: Colors.black87,
                   ),
@@ -481,7 +482,7 @@ class _IssueRaisedScreenState extends State<IssueRaisedScreen> {
     // Calculate appropriate cell size based on available width
     final availableWidth = width - (isTablet ? 16 : 0);
     final cellWidth = availableWidth / 7;
-    final cellHeight = isDesktop ? 60.0 : (isTablet ? 52.0 : 48.0);
+    final cellHeight = isTablet ? 52.0 : 48.0;
 
     final daysInView = _getDaysInMonthView();
 

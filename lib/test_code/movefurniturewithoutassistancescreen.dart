@@ -137,11 +137,24 @@ class _MoveFurnitureWithoutAssistanceScreenState
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(
-                                  Icons.accessible_forward,
-                                  size: isTablet ? 32 : 28,
-                                  color: const Color(0xFF5B6FFF),
+                                Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF5B6FFF).withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Icon(
+                                    Icons.accessible_forward,
+                                    size: isTablet ? 32 : 28,
+                                    color: const Color(0xFF5B6FFF),
+                                  ),
                                 ),
+
+                                // Icon(
+                                //   Icons.accessible_forward,
+                                //   size: isTablet ? 32 : 28,
+                                //   color: const Color(0xFF5B6FFF),
+                                // ),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(

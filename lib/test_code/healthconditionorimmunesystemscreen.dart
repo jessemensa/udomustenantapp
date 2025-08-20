@@ -14,7 +14,7 @@ class HealthConditionOrImmuneSystemScreen extends StatefulWidget {
 
 class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrImmuneSystemScreen> {
   String? _disabilityStatus;
-  int? _numberOfResidentsWithDisability;
+  int? _numberOfResidentsWithHealthConditionOrImmunesystemIssues;
   final TextEditingController _numberController = TextEditingController();
   int _selectedIndex = 0;
   bool _showAdditionalInfo = false;
@@ -97,10 +97,10 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
+          // final height = constraints.maxHeight;
           final isTablet = width > 600;
           final isDesktop = width > 840;
-          final isLandscape = width > height;
+          // final isLandscape = width > height;
 
           // Adaptive sizing
           final double horizontalPadding = isDesktop
@@ -398,7 +398,7 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
               _disabilityStatus = value;
               _showAdditionalInfo = value == 'Yes';
               if (!_showAdditionalInfo) {
-                _numberOfResidentsWithDisability = null;
+                _numberOfResidentsWithHealthConditionOrImmunesystemIssues = null;
                 _numberController.clear();
               }
             });
@@ -432,14 +432,14 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
             // Quick select buttons for 1-2
             ...List.generate(2, (index) {
               final number = index + 1;
-              final isSelected = _numberOfResidentsWithDisability == number;
+              final isSelected = _numberOfResidentsWithHealthConditionOrImmunesystemIssues == number;
 
               return Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: OutlinedButton(
                   onPressed: () {
                     setState(() {
-                      _numberOfResidentsWithDisability = number;
+                      _numberOfResidentsWithHealthConditionOrImmunesystemIssues = number;
                       _numberController.text = number.toString();
                     });
                   },
@@ -451,7 +451,7 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
                       width: isSelected ? 2 : 1,
                     ),
                     backgroundColor: isSelected
-                        ? const Color(0xFF5B6FFF).withOpacity(0.1)
+                        ? const Color(0xFF5B6FFF).withValues(alpha: 0.1)
                         : Colors.white,
                     padding: EdgeInsets.symmetric(
                       horizontal: isTablet ? 24 : 20,
@@ -512,7 +512,7 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
                 ),
                 onChanged: (value) {
                   setState(() {
-                    _numberOfResidentsWithDisability = int.tryParse(value);
+                    _numberOfResidentsWithHealthConditionOrImmunesystemIssues = int.tryParse(value);
                   });
                 },
               ),
@@ -526,20 +526,20 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
 
   Widget _buildContextMessage(double bodyFontSize, bool isTablet) {
     IconData icon;
-    Color color;
+    // Color color;
     String message;
 
     if (_disabilityStatus == 'Yes') {
       icon = Icons.priority_high;
-      color = Colors.red;
+      // color = Colors.red;
       message = 'Your case will be given high priority. We\'ll ensure all work is carried out safely with appropriate precautions for pregnant residents.';
     } else if (_disabilityStatus == 'No') {
       icon = Icons.check_circle_outline;
-      color = Colors.green;
+      // color = Colors.green;
       message = 'Thank you for the information. We\'ll proceed with standard assessment procedures.';
     } else {
       icon = Icons.privacy_tip_outlined;
-      color = Colors.grey;
+      // color = Colors.grey;
       message = 'Your privacy is respected. We\'ll proceed with our standard safety protocols.';
     }
 
@@ -578,7 +578,7 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
   Widget _buildBottomSection(BuildContext context, double buttonHeight,
       double bodyFontSize, bool isTablet) {
     final isValid = _disabilityStatus != null &&
-        (!_showAdditionalInfo || _numberOfResidentsWithDisability != null);
+        (!_showAdditionalInfo || _numberOfResidentsWithHealthConditionOrImmunesystemIssues != null);
 
     return Column(
       children: [
@@ -601,11 +601,11 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
                     onPressed: isValid
                         ? () {
                       // Prepare data
-                      final pregnancyData = {
-                        'pregnancyStatus': _disabilityStatus,
-                        if (_numberOfResidentsWithDisability != null)
-                          'numberOfPregnantResidents': _numberOfResidentsWithDisability,
-                      };
+                      // final pregnancyData = {
+                      //   'pregnancyStatus': _disabilityStatus,
+                      //   if (_numberOfResidentsWithHealthConditionOrImmunesystemIssues != null)
+                      //     'numberOfPregnantResidents': _numberOfResidentsWithHealthConditionOrImmunesystemIssues,
+                      // };
 
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -656,34 +656,34 @@ class _HealthConditionOrImmuneSystemScreenState extends State<HealthConditionOrI
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Exo2',
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildPlaceholderScreen(String title, IconData icon) {
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(icon, size: 64, color: Colors.grey),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             fontSize: 24,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         const Text(
+  //           'Coming Soon',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontFamily: 'Exo2',
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _showBackDialog(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width > 600;
